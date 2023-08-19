@@ -115,7 +115,7 @@ class AuthAPIView(APIView):
             res.set_cookie('refresh', refresh_token, httponly=True)
             return res
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': '로그인에 실패했습니다!'}, status=status.HTTP_400_BAD_REQUEST)
 
     # 로그아웃
 
