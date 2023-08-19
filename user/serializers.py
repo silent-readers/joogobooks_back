@@ -9,16 +9,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password', 'email']
 
-    def create(self, *args, **kwargs):
-        user = super().create(*args, **kwargs)
-        password = user.password
-        user.set_password(password)
-        user.save()
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
         return user
 
-    def update(self, *args, **kwargs):
-        user = super().update(*args, **kwargs)
-        password = user.password
-        user.set_password(password)
-        user.save()
+    def update(self, validated_data):
+        user = User.objects.update(
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
         return user
