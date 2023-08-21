@@ -1,5 +1,6 @@
 import jwt
-from rest_framework import status
+from django.db.migrations import serializer
+from rest_framework import status, generics
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
@@ -13,8 +14,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 from joongobooks.settings import SECRET_KEY
 
-from .models import User
-from .serializers import UserSerializer
+from .models import User, Profile
+from .serializers import UserSerializer, ProfileSerializer
 
 
 class UserRegisterAPIView(APIView):
@@ -130,3 +131,22 @@ class AuthAPIView(APIView):
         response.delete_cookie('access')
         response.delete_cookie('refresh')
         return response
+
+class ProfileView(APIView):
+    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.IsAuthenticated] 프로필 페이지 로그인 안 해도 볼 수 있다
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id) # 유저 가져오기: 유저 정보 보기 위해
+        serializer = ProfileSerializer(user)
+
+        return Response(serializer.data)
+
+class ProfileCreateView(APIView):
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        serializer = ProfileSerializer(user)
+        if serializer.is_valid():
+            serializer.save(author=request.user)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+    
