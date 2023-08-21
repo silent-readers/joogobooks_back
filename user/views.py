@@ -1,13 +1,9 @@
 import jwt
-from django.db.migrations import serializer
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework import permissions
 from rest_framework.views import APIView
-from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenObtainPairSerializer
 
 from django.shortcuts import get_object_or_404
@@ -119,7 +115,6 @@ class AuthAPIView(APIView):
             return Response({'message': '로그인에 실패했습니다!'}, status=status.HTTP_400_BAD_REQUEST)
 
     # 로그아웃
-
     def delete(self, request):
         # 쿠키에 저장된 토큰 삭제 => 로그아웃 처리
         response = Response(
@@ -132,25 +127,26 @@ class AuthAPIView(APIView):
         response.delete_cookie('refresh')
         return response
 
+
 class ProfileView(APIView):
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticated] 프로필 페이지 로그인 안 해도 볼 수 있다
+
     def get(self, request, user_id):
-        user = get_object_or_404(User, id=user_id) # 유저 가져오기: 유저 정보 보기 위해
+        user = get_object_or_404(User, id=user_id)  # 유저 가져오기: 유저 정보 보기 위해
         serializer = ProfileSerializer(user)
 
         return Response(serializer.data)
 
+
 class ProfileCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
         serializer = ProfileSerializer(user, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
+
         return Response(serializer.errors, status=400)
-
-
-
-
