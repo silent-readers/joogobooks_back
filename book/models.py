@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Post(models.Model):
+class Post(models.Model): 
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, required=True)
     author = models.CharField(max_length=100, required=True)
