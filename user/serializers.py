@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from .models import User, Profile
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -23,3 +22,22 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'profile_img', 'about_me']
+
+    def create(self, validated_data):
+        user = self.request.user
+        profile = Profile.objects.create(
+            user=user,
+            nickname=validated_data['nickname'],
+            img=validated_data['profile_img'],
+            about=validated_data['about_me']
+        )
+        return profile
+
+
