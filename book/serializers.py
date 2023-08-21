@@ -4,7 +4,7 @@ from .models import Post, PostImage
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'writer', 'title', 'author', 'publisher', 'condition', 'original_price', 'selling_price', 'detail_info', 'sale_condition', 'uploaded_at')
+        fields = ('id',  'title', 'author', 'publisher', 'condition', 'original_price', 'selling_price', 'detail_info', 'sale_condition', 'uploaded_at')
 
 
 class PostImageSerializer(serializers.ModelSerializer):
