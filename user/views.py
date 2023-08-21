@@ -142,11 +142,15 @@ class ProfileView(APIView):
         return Response(serializer.data)
 
 class ProfileCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
-        serializer = ProfileSerializer(user)
+        serializer = ProfileSerializer(user, data=request.data)
         if serializer.is_valid():
-            serializer.save(author=request.user)
+            serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-    
+
+
+
+
