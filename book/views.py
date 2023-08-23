@@ -12,8 +12,8 @@ from rest_framework import viewsets
 #     AllowAny
 # )
 
-from .models import Post, PostImage
-from .serializers import PostSerializer, PostImageSerializer
+from .models import Post
+from .serializers import PostSerializer
 
 # Create your views here.
 class PostListView(APIView):
