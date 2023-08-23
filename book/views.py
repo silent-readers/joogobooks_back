@@ -3,36 +3,24 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from rest_framework.filters import SearchFilter
-from rest_framework import viewsets
-
-# from rest_framework.permissions import (
-#     IsAuthenticated,
-#     IsAuthenticatedOrReadOnly,
-#     AllowAny
-# )
-
-from .models import Post
-from .serializers import PostSerializer
+from .models import Book
+from .serializers import BookSerializer
 
 # Create your views here.
-class PostListView(APIView):
+class BookListView(APIView):
     
     def get(self, request):
-        postlist = Post.objects.all()
-        serializer = PostSerializer(postlist, many=True)
+        booklist = Book.objects.all()
+        serializer = BookSerializer(booklist, many=True)
         return Response(serializer.data)
 
     
-class PostCreateView(APIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    # permission_classes = [
-    #     IsAuthenticated,
-    # ]
+class BookCreateView(APIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
     
     def post(self, request, *args, **kwargs):
-        serializer = PostSerializer(data=request.data)
+        serializer = BookSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

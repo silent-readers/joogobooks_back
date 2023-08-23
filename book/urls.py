@@ -1,9 +1,8 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import PostListView, PostCreateView, PostSearchView
+from .views import BookListView, BookCreateView
 
 
 urlpatterns = [
-    path('list/', PostListView.as_view(), name='book-list'),
-    path('create/', PostCreateView.as_view(), name='book-create')
+    path('list/', BookListView.as_view(), name='book-list'),
+    path('create/', BookCreateView.as_view(), name='book-create')
 ]
