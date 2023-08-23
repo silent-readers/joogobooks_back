@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from user import views
+from .views import UserRegisterAPIView, AuthAPIView, UserPasswordChangeAPIView
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -14,4 +15,5 @@ urlpatterns = [
     # simplejwt 에서 제공하는 기본 JWT 인증
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('password/change/', UserPasswordChangeAPIView.as_view(), name='user_password_change'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
