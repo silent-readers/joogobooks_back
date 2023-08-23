@@ -1,13 +1,7 @@
 from rest_framework import serializers
-from .models import Post, PostImage
+from .models import Book
 
-class PostSerializer(serializers.ModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
-        fields = ('id', 'writer', 'title', 'author', 'publisher', 'condition', 'original_price', 'selling_price', 'detail_info', 'sale_condition', 'uploaded_at')
-
-
-class PostImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PostImage
-        fields = ('id', 'postID', 'image', 'created_at')
+        model = Book
+        fields = ('id',  'title', 'author', 'publisher', 'condition', 'original_price', 'selling_price', 'detail_info', 'sale_condition', 'uploaded_at')
