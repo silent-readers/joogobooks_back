@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenObtainPairSerializer
 
@@ -157,7 +158,24 @@ class ProfileCreateView(APIView):
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+# 비밀번호 변경
+class UserPasswordChangeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def put(self, request):
+        user = self.request.user
+
+        current_password = request.data.get('current_password')
+        new_password = request.data.get('new_password')
+
+        if not user.check_password(current_password):
+            return Response({'error': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+
+        return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+        
 # class ProfileCreateView(APIView):
 #     permission_classes = [permissions.IsAuthenticated]
 
