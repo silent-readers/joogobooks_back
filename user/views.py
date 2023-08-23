@@ -131,10 +131,9 @@ class AuthAPIView(APIView):
 class ProfileView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)  # 유저 가져오기: 유저 정보 보기 위해
-        serializer = ProfileSerializer(user)
-
+    def get(self,request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        serializer = ProfileSerializer(user.profile)
         return Response(serializer.data)
 
 
