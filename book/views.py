@@ -39,11 +39,3 @@ class PostCreateView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class PostSearchView(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    
-    # Search filter 기반으로 검색
-    filter_backends = [SearchFilter]
-    # 어떤 필드를 기준으로 할 건지 튜플 형식으로 지정
-    search_fields = ['title']
