@@ -141,7 +141,6 @@ class ProfileCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        # print(user_id)
         user = get_object_or_404(User, pk=user_id)
         nickname = request.data.get('nickname')
         profile_img = request.data.get('profile_img')
@@ -158,17 +157,15 @@ class ProfileCreateView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# class ProfileCreateView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
+class ProfileUpdateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-#     def post(self, request, user_id):
-#         user = get_object_or_404(User, id=user_id)
-#         print(user)
-#         serializer = ProfileSerializer(user, data=request.data)
+    def put(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        serializer = ProfileSerializer(user.profile, data=request.data)
 
-#         if serializer.is_valid():
-#             serializer.save()
-#             print(serializer.data)
-#             return Response(serializer.data, status=201)
-
-#         return Response(serializer.errors, status=400)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
