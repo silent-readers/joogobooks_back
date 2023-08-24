@@ -68,3 +68,4 @@ class BookDeleteView(APIView):
         book = get_object_or_404(Book, id=book_id)
         book.delete()
         return redirect('book_list')
+    
