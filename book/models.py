@@ -1,10 +1,10 @@
 from django.db import models
-# from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model
 
-# User = get_user_model()
+User = get_user_model()
 
 class Book(models.Model):
-    writer = models.CharField("유저", max_length=100)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField("도서명", max_length=100)
     author = models.CharField("저자", max_length=100)
     publisher = models.CharField("출판사", max_length=100)
