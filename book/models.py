@@ -13,5 +13,5 @@ class Book(models.Model):
     selling_price = models.IntegerField("판매가")
     detail_info = models.TextField("상세내용", max_length=1000)
     sale_condition = models.CharField("판매상태", max_length=10, default="판매중")
-    image = models.ImageField("이미지", upload_to=None, blank=True)
+    image = models.ImageField("이미지", upload_to='book_image/', blank=True)
     uploaded_at = models.DateTimeField("작성시간",auto_now_add=True)
