@@ -172,30 +172,34 @@ class ProfileUpdateView(APIView):
           
 # 비밀번호 변경
 class UserPasswordChangeAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
-    def put(self, request):
-        user = self.request.user
-
-        current_password = request.data.get('current_password')
+    def put(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        password = request.data.get('password')
         new_password = request.data.get('new_password')
 
-        if not user.check_password(current_password):
-            return Response({'error': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        if user.check_password(password):
 
-        user.set_password(new_password)
-        user.save()
+            user.set_password(new_password)
+            user.save()
 
-        return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+            return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+        
+        return Response({'message': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # 회원 탈퇴
 class UserDeleteAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
-    def delete(self, request):
-        user = self.request.user
-        user.delete()
-        return Response({'message': '회원 탈퇴가 성공적으로 이루어졌습니다.'}, status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        password = request.data.get('password')
+
+        if user.check_password(password):
+            user.is_active = False
+            user.save()
+            return Response({'message': '회원 탈퇴가 성공적으로 이루어졌습니다.'}, status=status.HTTP_204_NO_CONTENT)
+        
+        return Response({'message': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
