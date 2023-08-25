@@ -13,7 +13,6 @@ from joongobooks.settings import SECRET_KEY
 from .models import User, Profile
 from .serializers import UserSerializer, ProfileSerializer
 
-
 class UserRegisterAPIView(APIView):
     permission_classes = [permissions.AllowAny]
     # 회원가입
@@ -67,7 +66,7 @@ class AuthAPIView(APIView):
             if serializer.is_valid(raise_exception=True):
                 access = serializer.data.get('access', None)
                 refresh = serializer.data.get('refresh', None)
-                payload = jwt.decode(access, SECRET_KEY, algorithme=['HS256'])
+                payload = jwt.decode(access, SECRET_KEY, algorithms=['HS256'])
                 pk = payload.get('used_id')
                 user = get_object_or_404(User, pk=pk)
                 serializer = UserSerializer(instance=user)
@@ -169,3 +168,34 @@ class ProfileUpdateView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          
+# 비밀번호 변경
+class UserPasswordChangeAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        user = self.request.user
+
+        current_password = request.data.get('current_password')
+        new_password = request.data.get('new_password')
+
+        if not user.check_password(current_password):
+            return Response({'error': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+
+        return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+
+
+# 회원 탈퇴
+class UserDeleteAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = self.request.user
+        user.delete()
+        return Response({'message': '회원 탈퇴가 성공적으로 이루어졌습니다.'}, status=status.HTTP_204_NO_CONTENT)
