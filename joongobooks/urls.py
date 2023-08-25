@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from user.views import UserPasswordChangeAPIView, UserDeleteAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('user/', include('user.urls')),
-    path('api/user/', include('user.urls')),
+    path('api/', include('rest_framework.urls')),
+    path('book/', include('book.urls')),
+    path('api/password/change/', UserPasswordChangeAPIView.as_view(), name='password_change'),
+    path('api/delete/', UserDeleteAPIView.as_view(), name='user_delete'),
 ]
