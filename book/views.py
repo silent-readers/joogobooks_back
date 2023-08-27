@@ -24,6 +24,7 @@ class IsBookAuthor(permissions.BasePermission):
     
 
 class BookListView(APIView, PaginationHandlerMixin):
+    permission_classes = [permissions.AllowAny]
     pagination_class = BookPagination
     serializer_class = BookSerializer
     
@@ -38,6 +39,7 @@ class BookListView(APIView, PaginationHandlerMixin):
 
     
 class BookCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     
