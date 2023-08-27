@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'corsheaders',
+    'django_filters',
 
     # 생성한 앱
     'book',
@@ -159,7 +160,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE' : 5, # 한 페이지에 보여질 글 수 설정
 }
 
 # CORS 관련 추가
