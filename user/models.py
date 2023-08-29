@@ -70,3 +70,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.nickname} / {self.user}"
+
+
+class PurchaseHistory(models.Model):
+    purchaser = models.ForeignKey(User, on_delete=models.CASCADE)
+    purchased_book = models.ForeignKey('book.Book', on_delete=models.CASCADE)
+    purchase_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.purchaser.username} purchased {self.purchased_book.title}"
