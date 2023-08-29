@@ -10,8 +10,12 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 from joongobooks.settings import SECRET_KEY
 
-from .models import User, Profile
+from .models import User, Profile, PurchaseHistory
 from .serializers import UserSerializer, ProfileSerializer
+
+from book.models import Book
+from book.serializers import BookSerializer
+from bookreview.serializers import BookReview, BookReviewSerializer
 
 class UserRegisterAPIView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -203,3 +207,36 @@ class UserDeleteAPIView(APIView):
             return Response({'message': '회원 탈퇴가 성공적으로 이루어졌습니다.'}, status=status.HTTP_204_NO_CONTENT)
         
         return Response({'message': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 구매 기록
+class PurchaseHistoryView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        purchase_history = PurchaseHistory.objects.filter(purchaser=request.user.id, purchased_book__sale_condition='판매완료')
+        purchased_books = [purchase.purchased_book for purchase in purchase_history]
+        serializer = BookSerializer(purchased_books, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# 판매 기록
+class SaleHistoryView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        sold_books = Book.objects.filter(writer=request.user.id, sale_condition='판매완료')
+        serializer = BookSerializer(sold_books, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# 서평 정보
+class ReviewBookListView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = BookReviewSerializer
+
+    def get(self, request):
+        user = self.request.user
+        reviews = BookReview.objects.filter(purchased_book__writer=user)
+        serializer = self.serializer_class(reviews, many=True)
+        return Response(serializer.data)
