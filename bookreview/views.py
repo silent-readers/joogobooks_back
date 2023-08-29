@@ -5,6 +5,7 @@ from rest_framework.generics import get_object_or_404
 
 from .models import BookReview
 from .serializers import BookReviewListSerializer, BookReviewSerializer
+from book.models import Book
 
 from rest_framework import generics, filters
 # Create your views here.
@@ -31,7 +32,10 @@ class BookReviewCreateView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = BookReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(review_writer = request.user)
+            purchased_book_id = request.data.get('purchased_book')
+            purchased_book = get_object_or_404(Book, id=purchased_book_id)
+            purchased_book_writer = purchased_book.writer
+            serializer.save(review_writer = request.user, purchased_book=purchased_book_writer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
