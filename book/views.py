@@ -19,8 +19,12 @@ class BookPagination(PageNumberPagination):
 
 class IsBookAuthor(permissions.BasePermission):
     def has_permission(self, request, view):
-        book = view.get_object()
-        return request.user == book.user
+        book_id = view.kwargs.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+        except Book.DoesNotExist:
+            return False
+        return request.user == book.writer
     
 
 class BookListView(APIView, PaginationHandlerMixin):
@@ -73,7 +77,7 @@ class BookUpdateView(APIView):
         book = get_object_or_404(Book, id=book_id)
         serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
-            if request.user == book.user:
+            if request.user == book.writer:
                 serializer.save()
                 return Response(serializer.data)
             else:
@@ -82,13 +86,17 @@ class BookUpdateView(APIView):
 
 
 class BookDeleteView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsBookAuthor]
 
     def delete(self, request, book_id):
         book = get_object_or_404(Book, id=book_id)
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+        if request.user == book.writer:
+            book.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+
 
 class BookSearchFilter(FilterSet):
 
