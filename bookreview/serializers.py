@@ -16,4 +16,4 @@ class BookReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReview
         fields = '__all__'
-
+        read_only_fields = ['view_count']
