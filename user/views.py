@@ -222,7 +222,7 @@ class PurchaseHistoryView(APIView):
 
 # 판매 기록
 class SaleHistoryView(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         sold_books = Book.objects.filter(writer=request.user.id, sale_condition='판매완료')
