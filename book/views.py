@@ -104,6 +104,7 @@ class BookSearchFilter(FilterSet):
 
 
 class BookSearchView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
