@@ -7,6 +7,8 @@ from .models import BookReview
 from .serializers import BookReviewListSerializer, BookReviewSerializer
 
 from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import FilterSet
 # Create your views here.
 
 class IsBookReviewAuthor(permissions.BasePermission):
@@ -14,12 +16,20 @@ class IsBookReviewAuthor(permissions.BasePermission):
         bookreview = view.get_object()
         return request.user == bookreview.review_writer
     
+class BookReviewSearchFilter(FilterSet):
     
+    class Meta:
+        model = BookReview
+        fields = {
+            'book_title': ['icontains']
+        }
+
 class BookReviewListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = BookReview.objects.all()
     serializer_class = BookReviewListSerializer
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_class = BookReviewSearchFilter
     ordering =['view_count', 'created_at']
     
 
