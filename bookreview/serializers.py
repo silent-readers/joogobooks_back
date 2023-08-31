@@ -9,8 +9,14 @@ class BookReviewListSerializer(serializers.ModelSerializer):
         exclude = ['review']
 
 
-    
-    
+class BookEditSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BookReview
+        exclude =['review_writer']
+        read_only_fields = ['view_count']
+
+
 class BookReviewSerializer(serializers.ModelSerializer):
 
     class Meta:

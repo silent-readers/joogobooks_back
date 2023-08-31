@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import BookReview
-from .serializers import BookReviewListSerializer, BookReviewSerializer
+from .serializers import BookReviewListSerializer, BookReviewSerializer, BookEditSerializer
 
 from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -12,9 +12,13 @@ from django_filters.rest_framework import FilterSet
 # Create your views here.
 
 class IsBookReviewAuthor(permissions.BasePermission):
-    def has_permission(self, request, view):
-        bookreview = view.get_object()
-        return request.user == bookreview.review_writer
+    
+    def has_object_permission(self, request, view, bookreview):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # 요청자(request.user)가 객체의 user와 동일한지 확인
+        return bookreview.review_writer == request.user
+    
     
 class BookReviewSearchFilter(FilterSet):
     
@@ -36,10 +40,10 @@ class BookReviewListView(generics.ListAPIView):
 class BookReviewCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = BookReview.objects.all()
-    serializer_class = BookReviewSerializer
+    serializer_class = BookEditSerializer
     
     def post(self, request, *args, **kwargs):
-        serializer = BookReviewSerializer(data=request.data)
+        serializer = BookEditSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(review_writer = request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -49,6 +53,7 @@ class BookReviewCreateView(APIView):
 
 class BookReviewDetailView(APIView):
     permission_classes = [permissions.AllowAny]
+    
     def get(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
         serializer = BookReviewSerializer(bookreview)
@@ -62,12 +67,14 @@ class BookReviewUpdateView(APIView):
     
     def get(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
-        serializer = BookReviewSerializer(bookreview)
-        return Response(serializer.data)
+        if request.user == bookreview.review_writer:
+            serializer = BookEditSerializer(bookreview)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
     
     def put(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
-        serializer = BookReviewSerializer(bookreview, data=request.data)
+        serializer = BookEditSerializer(bookreview, data=request.data)
         if serializer.is_valid():
             if request.user == bookreview.review_writer:
                 serializer.save()
@@ -81,5 +88,7 @@ class BookReviewDeleteView(APIView):
     
     def delete(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
-        bookreview.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if request.user == bookreview.review_writer:
+            bookreview.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_403_FORBIDDEN)
