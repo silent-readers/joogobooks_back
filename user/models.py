@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+
 class UserManager(BaseUserManager):
 
     def _create_user(self, username, email, password, is_staff, is_superuser, is_active, **extra_fields):
@@ -63,7 +64,7 @@ class Profile(models.Model):
     nickname = models.CharField(
         "닉네임", max_length=20, unique=True, null=True)
     profile_img = models.ImageField(
-        "프로필이미지", upload_to='profile/', null=True)
+        "프로필이미지", upload_to='profile/', null=True, blank=True)
     about_me = models.TextField("자기소개", null=True, blank=True)
     updated_at = models.DateTimeField(
         "최근프로필수정일", auto_now=True)

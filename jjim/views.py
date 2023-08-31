@@ -28,3 +28,20 @@ class JjimAddView(APIView):
         # 직렬화 및 응답
         serializer = JjimSerializer(jjim)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+      
+class JjimDeleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request, book_id, user_id):
+        try:
+            jjim = Jjim.objects.filter(book_id=book_id, user_id=user_id)
+
+            # 해당하는 모든 레코드를 삭제
+            jjim.delete()
+
+            return Response({"성공적으로 찜목록에서 삭제했습니다"}, status=status.HTTP_204_NO_CONTENT)
+
+        except Jjim.DoesNotExist:
+            return Response({"error": "Jjim records not found"}, status=status.HTTP_404_NOT_FOUND)
+
