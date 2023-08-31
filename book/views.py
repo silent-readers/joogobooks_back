@@ -34,7 +34,8 @@ class BookListView(APIView, PaginationHandlerMixin):
         booklist = Book.objects.all()
         page = self.paginate_queryset(booklist)
         if page is not None:
-            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+            serializer = self.get_paginated_response(
+                self.serializer_class(page, many=True).data)
         else:
             serializer = self.serializer_class(booklist, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -101,8 +102,8 @@ class BookSearchFilter(FilterSet):
     class Meta:
         model = Book
         fields = {
-            'title':['icontains'],
-            'sale_condition':['exact'],            
+            'title': ['icontains'],
+            'sale_condition': ['exact'],            
         }
 
 
