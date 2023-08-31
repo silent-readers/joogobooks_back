@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'book',
     'chat',
     'user',
+    'jjim',
 ]
 
 MIDDLEWARE = [
