@@ -29,7 +29,7 @@ class JjimAddView(APIView):
         serializer = JjimSerializer(jjim)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
+      
 class JjimDeleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -44,3 +44,4 @@ class JjimDeleteView(APIView):
 
         except Jjim.DoesNotExist:
             return Response({"error": "Jjim records not found"}, status=status.HTTP_404_NOT_FOUND)
+
