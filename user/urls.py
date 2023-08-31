@@ -27,6 +27,10 @@ urlpatterns = [
     # 프로필 업데이트
     path('profile/<int:user_id>/update', views.ProfileUpdateView.as_view()),
 
+    path('purchase-history/', views.PurchaseHistoryView.as_view(), name='purchase-history'),
+    path('sale-history/', views.SaleHistoryView.as_view(), name='sale-history'),
+    path('review-book-list/', views.ReviewBookListView.as_view(), name='review-book-list'),
+
     # simplejwt 에서 제공하는 기본 JWT 인증
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

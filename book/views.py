@@ -18,12 +18,21 @@ class BookPagination(PageNumberPagination):
 
 
 class IsBookAuthor(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        book_id = view.kwargs.get('book_id')
+        try:
+            book = Book.objects.get(id=book_id)
+        except Book.DoesNotExist:
+            return False
+        return request.user == book.writer
     
     def has_object_permission(self, request, view, book):
         if request.method in permissions.SAFE_METHODS:
             return True
         # 요청자(request.user)가 객체의 user와 동일한지 확인
         return book.writer == request.user
+      
 
 class BookListView(APIView, PaginationHandlerMixin):
     permission_classes = [permissions.AllowAny]
@@ -94,8 +103,14 @@ class BookDeleteView(APIView):
         if request.user == book.writer:
             book.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+
         return Response(status=status.HTTP_403_FORBIDDEN)
     
+
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+
 
 class BookSearchFilter(FilterSet):
 

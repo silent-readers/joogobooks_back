@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import BookReview
+from book.models import Book
 
 
 class BookReviewListSerializer(serializers.ModelSerializer):
@@ -18,6 +19,7 @@ class BookEditSerializer(serializers.ModelSerializer):
 
 
 class BookReviewSerializer(serializers.ModelSerializer):
+    purchased_book = serializers.PrimaryKeyRelatedField(queryset=Book.objects.all())
 
     class Meta:
         model = BookReview
