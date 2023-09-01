@@ -65,7 +65,7 @@ class BookDetailView(APIView):
 
 
 class BookUpdateView(APIView):
-    permission_classes = [permissions.IsAuthenticated, IsBookAuthor]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, book_id):
         book = get_object_or_404(Book, id=book_id)
@@ -76,7 +76,7 @@ class BookUpdateView(APIView):
         book = get_object_or_404(Book, id=book_id)
         serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
-            if request.user == book.user:
+            if request.user == book.writer:
                 serializer.save()
                 return Response(serializer.data)
             else:
