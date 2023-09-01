@@ -15,6 +15,10 @@ class Book(models.Model):
     detail_info = models.TextField("상세내용", max_length=1000)
     sale_condition = models.CharField("판매상태", max_length=10, default="판매중")
     image = models.ImageField("이미지", upload_to='book_image/', blank=True)
+    category_choices = (('사회 정치', '사회 정치'), ('소설/시/희곡', '소설/시/희곡'), ('어린이', '어린이'), ('여행', '여행'),
+                        ('역사', '역사'), ('예술', '예술'), ('인문', '인문'), ('인물', '인물'), ('자기계발', '자기계발'),
+                        ('자연과학', '자연과학'), ('잡지', '잡지'), ('종교', '종교'), ('청소년', '청소년'))
+    category = models.CharField(max_length=20, choices=category_choices, null=True)
 
     class Meta:
         ordering = ["-id"]

@@ -141,13 +141,11 @@ class ProfileCreateView(APIView):
 
     def post(self, request, user_id):
         user = get_object_or_404(User, pk=user_id)
-        nickname = request.data.get('nickname')
         profile_img = request.data.get('profile_img')
         about_me = request.data.get('about_me')
 
         profile = Profile.objects.create(
             user=user,
-            nickname=nickname,
             profile_img=profile_img,
             about_me=about_me
         )

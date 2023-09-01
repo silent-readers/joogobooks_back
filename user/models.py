@@ -47,6 +47,8 @@ class User(AbstractUser):
     is_active = models.BooleanField("계정활성화", default=True)
     last_login = models.DateTimeField("마지막 로그인 시간", null=True, blank=True)
     date_joined = models.DateTimeField("가입일", auto_now_add=True)
+    nickname = models.CharField(
+        "닉네임", max_length=20, unique=True, null=True)
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
@@ -61,8 +63,6 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(
         'User', on_delete=models.CASCADE)
-    nickname = models.CharField(
-        "닉네임", max_length=20, unique=True, null=True)
     profile_img = models.ImageField(
         "프로필이미지", upload_to='profile/', null=True, blank=True)
     about_me = models.TextField("자기소개", null=True, blank=True)
@@ -70,4 +70,4 @@ class Profile(models.Model):
         "최근프로필수정일", auto_now=True)
 
     def __str__(self):
-        return f"{self.nickname} / {self.user}"
+        return f"{self.user}"
