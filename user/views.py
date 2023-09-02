@@ -13,6 +13,7 @@ from joongobooks.settings import SECRET_KEY
 from .models import User, Profile
 from .serializers import UserSerializer, ProfileSerializer
 
+
 class UserRegisterAPIView(APIView):
     permission_classes = [permissions.AllowAny]
     # 회원가입
@@ -22,24 +23,12 @@ class UserRegisterAPIView(APIView):
         if serializer.is_valid():
             user = serializer.save()
 
-            # jwt 토큰 접근
-            # token = TokenObtainPairSerializer.get_token(user)
-            # refresh_token = str(token)
-            # access_token = str(token.access_token)
             res = Response({
                 "user": serializer.data,
                 "message": "register success",
-                # "token": {
-                #     "access": access_token,
-                #     "refresh": refresh_token,
-                # },
             },
                 status=status.HTTP_200_OK,
             )
-
-            # jwt 토큰 => 쿠키에 저장
-            # res.set_cookie('access', access_token, httponly=True)
-            # res.set_cookie('refresh', refresh_token, httponly=True)
 
             return res
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -130,7 +119,7 @@ class AuthAPIView(APIView):
 class ProfileView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self,request, user_id):
+    def get(self, request, user_id):
         user = get_object_or_404(User, pk=user_id)
         serializer = ProfileSerializer(user.profile)
         return Response(serializer.data)
@@ -140,17 +129,22 @@ class ProfileCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        user = get_object_or_404(User, pk=user_id)
+        nickname = request.data.get('nickname')
         profile_img = request.data.get('profile_img')
         about_me = request.data.get('about_me')
 
+        try:
+            user_instance = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"detail": "User does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
         profile = Profile.objects.create(
-            user=user,
+            user=user_instance,
             profile_img=profile_img,
             about_me=about_me
         )
         serializer = ProfileSerializer(profile)
-        
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -166,8 +160,8 @@ class ProfileUpdateView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-          
-          
+
+
 # 비밀번호 변경
 class UserPasswordChangeAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -183,7 +177,7 @@ class UserPasswordChangeAPIView(APIView):
             user.save()
 
             return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
-        
+
         return Response({'message': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -199,5 +193,5 @@ class UserDeleteAPIView(APIView):
             user.is_active = False
             user.save()
             return Response({'message': '회원 탈퇴가 성공적으로 이루어졌습니다.'}, status=status.HTTP_204_NO_CONTENT)
-        
+
         return Response({'message': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
