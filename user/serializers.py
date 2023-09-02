@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import User, Profile
 
@@ -27,7 +28,31 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source='user.email')
+    nickname = serializers.CharField(source='user.nickname')
 
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['user', 'nickname', 'profile_img', 'about_me', 'updated_at']
+
+
+class myTokenObtainPairSerializer(TokenObtainPairSerializer):
+    # response 커스텀
+    default_error_messages = {
+        'no_active_account':
+            {
+                'message': 'username or password is incorrect!',
+                'success': False,
+                'status': 401
+            }
+    }
+
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # 정보 더하기
+        token['username'] = user.username,
+        token['email'] = user.email,
+        token['nickname'] = user.nickname
+        return token
