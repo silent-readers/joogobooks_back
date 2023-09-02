@@ -9,8 +9,8 @@ from django_filters.rest_framework import FilterSet
 from rest_framework.pagination import PageNumberPagination
 from .pagination import PaginationHandlerMixin
 
-from .models import Book
-from .serializers import BookSerializer
+from .models import Book, Comment, ChildComment
+from .serializers import BookSerializer, CommentSerializer, ChildCommentSerializer
 
 # Create your views here.
 
@@ -110,3 +110,56 @@ class BookSearchView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = BookSearchFilter
     ordering = ['uploaded_at', 'selling_price']
+
+
+class CommentWriteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serielizer_class = CommentSerializer
+
+    def get(self, request, book_id):
+        comments = Comment.objects.filter(book_id=book_id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def perform_create(self, serializer):
+        book_id = self.kwargs.get('book_id')
+        book = get_object_or_404(Book, id=book_id)
+        serializer.save(user=self.request.user, book=book)
+
+    def post(self, request, book_id):
+        serializer = CommentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            comment = serializer.save(user=request.user, book_id=book_id)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentDeleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, book_id):
+        comment = Comment.objects.get(pk=book_id)
+        comment.delete()
+        return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class ChildCommentCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, parent_comment_id):
+        serializer = ChildCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user,
+                            parent_comment_id=parent_comment_id)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChildCommentDeleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, parent_commnet_id):
+        childcomment = ChildComment.objects.get(pk=parent_commnet_id)
+        childcomment.delete()
+        return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
