@@ -28,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField(source='user.email')
     nickname = serializers.CharField(source='user.nickname')
 
     class Meta:
