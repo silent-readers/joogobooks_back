@@ -77,6 +77,11 @@
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="issues">8. 개발하며 겪은 이슈</span>
+- 슬기님
+- 승겸님
+- 유림님
+- 병훈님
+- 예원님
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="realization">9. 마무리</span>
