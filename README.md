@@ -46,8 +46,51 @@
 <img src="/readme/erd.png">
 
 ### 폴더 Tree
-
+```
+joongobooks
+├── book
+│   ├── migrations
+│   ├── admin.py
+│   ├── apps.py
+│   ├── pagination.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── joongobooks
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── media
+│   ├── book_image
+│   └── profile
+├── readme
+├── recommend
+│   ├── migrations
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── user
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── manage.py
+├── README.md
+└── requirements.txt
+```
 <p align="right"><a href="#top">(Top)</a></p>
+
 <br>
 ## <span id="role">4. 역할 분담</span>
 <img src="/readme/TeamProject - Joongobooks.png">
@@ -66,7 +109,7 @@
     - 하루 2번 사용가능
 <p align="right"><a href="#top">(Top)</a></p>
 
-
+<br>
 ## <span id="task">5. 개발 기간</span>
 - 개발기간(23.08.17 ~ 23.09.04)
 <img src="/readme/duration.png">
@@ -76,6 +119,7 @@
 - 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
 <p align="right"><a href="#top">(Top)</a></p>
 
+<br>
 ## <span id="ui">6. UI</span>
 
 <img src="/readme/ui1.png" alt="ui1.png">
