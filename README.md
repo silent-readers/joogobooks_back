@@ -43,9 +43,8 @@
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
 - ERD 구조
-![ERD 구조](https://github.com/yoursin0330/joogobooks_back/assets/103302201/0f622b86-13c5-455f-a54b-22ba98e5149a)
+![ERD](https://github.com/yoursin0330/joogobooks_back/assets/103302201/8dfc39bc-5815-4463-8d95-115d5aabab24)
 
-- 파일 디렉토리 구조
 
 ## <span id="role">4. 역할 분담</span>
 <img src="/readme/TeamProject - Joongobooks.png">
