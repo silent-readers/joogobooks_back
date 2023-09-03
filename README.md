@@ -42,7 +42,36 @@
 
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
+
+### ERD
 <img src="/readme/erd.png">
+
+### URL
+
+|   앱 이름  |        기능        |                          URL                         | Method |
+|:----------:|:------------------:|:----------------------------------------------------:|:------:|
+| user       | 회원가입           | 도메인/api/user/register/                             | POST   |
+|            | 로그인             | 도메인/api/user/auth/                                 | POST   |
+|            | 로그아웃           | 도메인/api/user/auth/                                 | DELETE |
+|            | 비밀번호 변경      | 도메인/api/user/auth/<int:user_id>/changepassword/    | PUT    |
+|            | 회원탈퇴           | 도메인/api/user/auth/<int:user_id>/delete/            | DELETE |
+|            | 프로필 조회        | 도메인/api/user/auth/profile/<int:user_id>/           | GET    |
+|            | 프로필 생성        | 도메인/api/user/auth/profile/<int:user_id>/create     | POST   |
+|            | 프로필 수정        | 도메인/api/user/auth/profile/<int:user_id>/update     | PUT    |
+|            | JWT 토큰 갱신      | 도메인/api/user/auth/refresh/                         | GET    |
+|            | JWT 토큰 발급      | 도메인/api/user/api/token/                            | GET    |
+| book       | 판매글 리스트      | 도메인/book/list/                                     | GET    |
+|            | 판매글 검색        | 도메인/book/search/                                   | GET    |
+|            | 판매글 생성        | 도메인/book/create/                                   | POST   |
+|            | 판매글 상세보기    | 도메인/book/<int:book_id>/                            | GET    |
+|            | 판매글 삭제        | 도메인/book/<int:book_id>/delete/                     | DELETE |
+|            | 판매글 좋아요      | 도메인/book/<int:book_id>/like/                       | POST   |
+|            | 댓글 달기          | 도메인/book/<int:book_id>/comment/create/             | POST   |
+|            | 댓글 삭제          | 도메인/book/<int:book_id>/<int:comment_id>/delete/    | POST   |
+| jjim       | 판매글 찜          | 도메인/jjim/create/                                   | POST   |
+|            | 판매글 찜 취소     | 도메인/jjim/delete/<int:book_id>/<int:user_id>/        | DELETE |
+| recommend  | 책 추천 기록 조회  | 도메인/api/recommend/chatbot/                          | GET    |
+|            | 책 추천 받기       | 도메인/api/recommend/chatbot/                         | POST   |
 
 
 ## <span id="role">4. 역할 분담</span>
