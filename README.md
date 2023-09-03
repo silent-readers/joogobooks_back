@@ -43,7 +43,7 @@
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
 - ERD 구조
-![ERD](readme/erd.png)
+<img src="/readme/erd.png">
 
 
 ## <span id="role">4. 역할 분담</span>
