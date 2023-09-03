@@ -141,8 +141,8 @@ joongobooks
     - chatbot 질문하기 / 답변받기
     - 하루 2번 사용가능
 <p align="right"><a href="#top">(Top)</a></p>
-
 <br>
+
 ## <span id="task">5. 개발 기간</span>
 - 개발기간(23.08.17 ~ 23.09.04)
 <img src="/readme/duration.png">
@@ -151,8 +151,8 @@ joongobooks
 
 - 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
 <p align="right"><a href="#top">(Top)</a></p>
-
 <br>
+
 ## <span id="ui">6. UI</span>
 
 <img src="/readme/ui1.png" alt="ui1.png">
@@ -160,9 +160,32 @@ joongobooks
 <img src="/readme/ui2.png" alt="ui1.png">
 
 <p align="right"><a href="#top">(Top)</a></p>
+<br>
 
 ## <span id="pages">7. 페이지 기능</span>
+
+| 1. 회원가입 화면 | 2. 로그인 및 로그아웃|
+|:---------:|:---------:|
+|![register.gif](readme/register.gif)|![loginandout.gif](readme/loginandout.gif)|
+
+| 3. 도서 목록 조회|
+|:---------:|
+|![booklist.gif](readme/booklist.gif)|
+
+| 4. 도서정보생성 | 5. 도서정보 수정 |
+|:---------:|:---------:|
+|![createbook.gif](readme/createbook.gif)|![updatebook.gif](readme/updatebook.gif)|
+
+| 6. 도서정보삭제 | 7. 도서정보 검색 |
+|:---------:|:---------:|
+|![deletebook.gif](readme/deletebook.gif)|![searchbook.gif](readme/searchbook.gif)|
+
+| 8. 도서추천 AI Bot | 9. About us |
+|:---------:|:---------:|
+|![recommend.gif](readme/recommend.gif)|![aboutus.gif](readme/aboutus.gif)|
+
 <p align="right"><a href="#top">(Top)</a></p>
+<br>
 
 ## <span id="issues">8. 개발하며 겪은 이슈</span>
 - 슬기님
@@ -256,6 +279,7 @@ joongobooks
 - 병훈님
 - 예원님
 <p align="right"><a href="#top">(Top)</a></p>
+<br>
 
 ## <span id="realization">9. 마무리</span>
 - 슬기님
