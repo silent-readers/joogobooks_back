@@ -71,6 +71,11 @@
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="ui">6. UI</span>
+
+<img src="/readme/ui1.png" alt="ui1.png">
+
+<img src="/readme/ui2.png" alt="ui1.png">
+
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="pages">7. 페이지 기능</span>
