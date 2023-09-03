@@ -143,6 +143,7 @@ joongobooks
         - user의 views.py 에서 UserRegisterAPIView 클래스에 permission_classes 를 추가해서 권한을 AllowAny로 설정했다.
         - POSTMAN 에서 POST 설정 후 body에 정보를 담아 다시 send 해주니 이번에는 제대로 동작하여 HTTP_200_ok 를 출력받았다.
 <br>
+
 2. Signup, login 에서 server로 연결 안됨
     - 내용
         - fetch url 사용하여 Backend 서버로 연결하여 request 및 response 받기 위해 시도를 했다.
@@ -153,6 +154,7 @@ joongobooks
         - button click 시 submit event가 기본적으로 일어나면서 페이지 이동 현상이 발생하게 되는데 그로 인해 fetch를 통해 서버로부터 response를 얻지 못한다는 것을 알게 되었다.
         - 원하는 코드 진행을 위해 e.preventDefault(); 코드를 첫 단에 입력하였고 그 후에 response 값을 받을 수 있었다.
 <br>
+
 3. server를 통해 저장된 media file을 가져올 때 화면에 구현되지 않는 error
     - 내용
         - fetch api request를 통해 중고 도서가 등록된 후 도서목록에서 등록된 도서들을 확인할 수 있었다. 하지만 다른 정보들은 잘 넘어오는 반면 img 파일은 넘어오지 못하는 현상을 발견했다.
