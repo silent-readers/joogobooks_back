@@ -16,6 +16,7 @@
 7. [페이지 기능](#pages)
 8. [개발하며 겪은 이슈](#issues)
 9. [마무리](#realization)
+10. [고도화 일정](#advancement)
 
 <hr>
 
@@ -291,3 +292,9 @@ joongobooks
 - 예원님
 
 <p align="right"><a href="#top">(Top)</a></p>
+<br>
+
+## <span id="advancement">10. 고도화 일정 </span>
+
+<p align="right"><a href="#top">(Top)</a></p>
+<br>
