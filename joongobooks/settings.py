@@ -27,6 +27,9 @@ AUTH_USER_MODEL = 'user.User'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+# OpenAI API Key
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 # secrets.json 파일 위치를 명시
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
 with open(secret_file) as f:
@@ -56,8 +59,8 @@ INSTALLED_APPS = [
     # channels에서 runserver 명령을 대체시키기에 다른앱에 비해 우선순위를 갖기 위해 상단에 추가.
     # channels 4.0부터 django 기본의 runserver 명령을 daphne앱에서 재정의하여 동작됨.
 
-    'channels',
-    'daphne',
+    # 'channels',
+    # 'daphne',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -77,9 +80,9 @@ INSTALLED_APPS = [
 
     # 생성한 앱
     'book',
-    'chat',
     'user',
     'jjim',
+    'recommend',
 ]
 
 MIDDLEWARE = [
@@ -116,13 +119,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'joongobooks.wsgi.application'
-ASGI_APPLICATION = 'joongobooks.asgi.application'
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
 
 
 # Database
