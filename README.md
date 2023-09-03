@@ -42,6 +42,9 @@
 
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
+- ERD 구조
+![ERD 구조](https://github.com/yoursin0330/joogobooks_back/assets/103302201/0f622b86-13c5-455f-a54b-22ba98e5149a)
+- 파일 디렉토리 구조
 
 ## <span id="role">4. 역할 분담</span>
 <img src="/readme/TeamProject - Joongobooks.png">
@@ -80,9 +83,11 @@
 - 슬기님
 - 승겸님
 - 유림님
+    - bookSearchView를 만들면서 카테고리 설정과 키워드 검색을 동시에 적용한 결과를 만들고 싶었는데, Search와 DjangoFilterBackend를 하나의 검색버튼으로 동시에 적용시킬 수 없었습니다. 그리고 검색을 filter를 사용해서 하자니 이름이 일치하는 것들만 결과물로 나와서, BookSearchFilter를 새로 만들어 적용시켰습니다. FilterSet을 상속받되, 책 제목을 검색할 때 키워드를 포함하는 모든 결과물들을 가지고 올 수 있도록 title은 icontains, sale_condition은 exact 필드를 사용하였습니다.
 - 병훈님
 - 예원님
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="realization">9. 마무리</span>
 <p align="right"><a href="#top">(Top)</a></p>
+- 짧은 기간의 프로젝트여서 구현하지 못해 아쉬운 기능들이 많지만, 성공적으로 팀 프로젝트를 처음으로 끝냈다는 것에 뿌듯합니다! 
