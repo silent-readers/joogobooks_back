@@ -43,7 +43,7 @@
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
 - ERD 구조
-![ERD](https://github.com/yoursin0330/joogobooks_back/assets/103302201/8dfc39bc-5815-4463-8d95-115d5aabab24)
+![ERD](readme/erd.png)
 
 
 ## <span id="role">4. 역할 분담</span>
