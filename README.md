@@ -168,21 +168,21 @@ joongobooks
 |:---------:|:---------:|
 |![register.gif](readme/register.gif)|![loginandout.gif](readme/loginandout.gif)|
 
-| 3. 도서 목록 조회|
+| 3. 도서 목록 조회| 4. 도서정보생성 |
+|:---------:|:---------:|
+|![booklist.gif](readme/booklist.gif)|![createbook.gif](readme/createbook.gif)|
+
+| 5. 도서정보 수정 | 6. 도서정보삭제 |
+|:---------:|:---------:|
+|![updatebook.gif](readme/updatebook.gif)|![deletebook.gif](readme/deletebook.gif)|
+
+| 7. 도서정보 검색 |8. 도서추천 AI Bot |
+|:---------:|:---------:|
+|![searchbook.gif](readme/searchbook.gif)|![recommend.gif](readme/recommend.gif)|
+
+|  9. About us |
 |:---------:|
-|![booklist.gif](readme/booklist.gif)|
-
-| 4. 도서정보생성 | 5. 도서정보 수정 |
-|:---------:|:---------:|
-|![createbook.gif](readme/createbook.gif)|![updatebook.gif](readme/updatebook.gif)|
-
-| 6. 도서정보삭제 | 7. 도서정보 검색 |
-|:---------:|:---------:|
-|![deletebook.gif](readme/deletebook.gif)|![searchbook.gif](readme/searchbook.gif)|
-
-| 8. 도서추천 AI Bot | 9. About us |
-|:---------:|:---------:|
-|![recommend.gif](readme/recommend.gif)|![aboutus.gif](readme/aboutus.gif)|
+|![aboutus.gif](readme/aboutus.gif)|
 
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
