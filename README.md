@@ -12,11 +12,10 @@
 3. [프로젝트 구조](#tree)
 4. [역할 분담](#role)
 5. [개발 기간](#task)
-6. [설치 및 실행](#install)
-7. [UI](#ui)
-8. [페이지 기능](#pages)
-9. [개발하며 겪은 이슈](#issues)
-10. [마무리](#realization)
+6. [UI](#ui)
+7. [페이지 기능](#pages)
+8. [개발하며 겪은 이슈](#issues)
+9. [마무리](#realization)
 
 <hr>
 
@@ -45,22 +44,40 @@
 <p align="right"><a href="#top">(Top)</a></p>
 
 ## <span id="role">4. 역할 분담</span>
+<img src="/readme/TeamProject - Joongobooks.png">
+
+### 구현기능
+- 🔐<strong>계정</strong>
+    - 회원가입
+    - 로그인/로그아웃
+    - 프로필 생성/수정
+- :computer: <strong>중고도서 정보</strong>
+    - 중고도서 이미지 파일 업로드, 미리보기
+    - 등록 / 수정 / 삭제
+    - 중고도서 목록 보기
+- :robot: <strong>AI catbot (recommend)</strong>
+    - chatbot 질문하기 / 답변받기
+    - 하루 2번 사용가능
 <p align="right"><a href="#top">(Top)</a></p>
+
 
 ## <span id="task">5. 개발 기간</span>
+- 개발기간(23.08.17 ~ 23.09.04)
+<img src="../joogobooks_back/readme/duration.png">
+
+- 🔗<a href="https://www.notion.so/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5?pvs=4"> Notion에서 Issue 관리</a>
+
+- 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
 <p align="right"><a href="#top">(Top)</a></p>
 
-## <span id="install">6. 설치 및 실행</span>
+## <span id="ui">6. UI</span>
 <p align="right"><a href="#top">(Top)</a></p>
 
-## <span id="ui">7. UI</span>
+## <span id="pages">7. 페이지 기능</span>
 <p align="right"><a href="#top">(Top)</a></p>
 
-## <span id="pages">8. 페이지 기능</span>
+## <span id="issues">8. 개발하며 겪은 이슈</span>
 <p align="right"><a href="#top">(Top)</a></p>
 
-## <span id="issues">9. 개발하며 겪은 이슈</span>
-<p align="right"><a href="#top">(Top)</a></p>
-
-## <span id="realization">10. 마무리</span>
+## <span id="realization">9. 마무리</span>
 <p align="right"><a href="#top">(Top)</a></p>
