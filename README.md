@@ -42,7 +42,6 @@
 
 ## <span id="tree">3. 프로젝트 구조</span>
 <p align="right"><a href="#top">(Top)</a></p>
-- ERD 구조
 <img src="/readme/erd.png">
 
 
