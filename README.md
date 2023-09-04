@@ -38,6 +38,10 @@
 ### 배포 URL
 - URL : 🔗http://joongobooks.com
 
+    :rocket: 테스트 ID : admin
+    :rocket: 테스트 Password : admin123!
+
+
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
 
@@ -75,6 +79,12 @@
 | recommend  | 책 추천 기록 조회  | 도메인/api/recommend/chatbot/                          | GET    |
 |            | 책 추천 받기       | 도메인/api/recommend/chatbot/                         | POST   |
 
+<br>
+
+### 🔗<a href="https://glimmer-velvet-2ce.notion.site/JoongoBooks-API-9f8775a8fb604bdd9f1f1daa7f7a3a93?pvs=4">API 명세서 확인</a>
+
+
+<br>
 
 
 ### 폴더 Tree
