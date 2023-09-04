@@ -155,8 +155,11 @@ joongobooks
 <br>
 
 ## <span id="task">5. 개발 기간</span>
-- 개발기간(23.08.17 ~ 23.09.04)
+### 개발기간(23.08.17 ~ 23.09.04)
+
 <img src="/readme/duration.png">
+
+<img src="/readme/develo_plan.png">
 
 - 🔗<a href="https://glimmer-velvet-2ce.notion.site/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5"> Notion에서 Issue 관리</a>
 
