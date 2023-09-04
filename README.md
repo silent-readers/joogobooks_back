@@ -325,7 +325,7 @@ joongobooks
         - 데스크톱에서 EC2 서버로 scp를 사용하여 파일을 전송하려 했지만, 'Permission Denied'오류 발생.
     - 결과
         - 키 페어 속성 - 보안 - 고급에서 ‘상속 사용 안 함’ 클릭 후 ‘이 개체에서 상속된 사용 권한을 모두 제거합니다.’ 클릭 후 저장, 편집 - 추가 - 데스크톱 계정 추가
-   ![Untitled](https://github.com/nekopurr/joogobooks_back/assets/85627591/ae565e44-5a7d-40d5-89c3-2e090ebc89bc)
+   <img src="/readme/pem.png">
 <br>
 
 3. Backend 서버에서 requirements.txt 설치 중 오류 발생
