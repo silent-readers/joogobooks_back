@@ -309,7 +309,57 @@ joongobooks
 
 - 유림님
     - bookSearchView를 만들면서 카테고리 설정과 키워드 검색을 동시에 적용한 결과를 만들고 싶었는데, Search와 DjangoFilterBackend를 하나의 검색버튼으로 동시에 적용시킬 수 없었습니다. 그리고 검색을 filter를 사용해서 하자니 이름이 일치하는 것들만 결과물로 나와서, BookSearchFilter를 새로 만들어 적용시켰습니다. FilterSet을 상속받되, 책 제목을 검색할 때 키워드를 포함하는 모든 결과물들을 가지고 올 수 있도록 title은 icontains, sale_condition은 exact 필드를 사용하였습니다.
+ 
+<br>
+
 - 병훈님
+1. 글 수정 및 삭제 시 작성자가 아니어도 수정 및 삭제가 되는 현상 발생
+    - 내용
+        - 권한 설정 시 IsAuthenticated만 적용되어 있는 부분 확인
+    - 결과
+        - request.user와 book.user가 같을 시 권한을 주는 IsBookAuthor 클래스를 생성하여 해결.
+<br>
+     
+2. 데스크톱에서 EC2 서버로 파일 전송 시 'Permission Denied' 에러 발생
+    - 내용
+        - 데스크톱에서 EC2 서버로 scp를 사용하여 파일을 전송하려 했지만, 'Permission Denied'오류 발생.
+    - 결과
+        - 키 페어 속성 - 보안 - 고급에서 ‘상속 사용 안 함’ 클릭 후 ‘이 개체에서 상속된 사용 권한을 모두 제거합니다.’ 클릭 후 저장, 편집 - 추가 - 데스크톱 계정 추가
+   ![Untitled](https://github.com/nekopurr/joogobooks_back/assets/85627591/ae565e44-5a7d-40d5-89c3-2e090ebc89bc)
+<br>
+
+3. Backend 서버에서 requirements.txt 설치 중 오류 발생
+    - 내용
+        - 가상환경 venv를 생성 후, requirements.txt 설치 도중 'Building wheels for collected packages: twisted-iocpsupport'오류가 발생하였다.
+        - Windows 환경에서는 잘 작동했는데, 오류가 발생해서 원인을 찾아보았다.
+    - 결과
+        - 'twisted-iocpsupport'는 Window 환경에서 사용하는 패키지로, Windows "I/O completion Ports" API에 바인딩을 제공하는 패키지다.
+        - Linux 환경에서는 사용하지 않기 때문에 requirements.txt에서 제거하였다.
+<br>
+
+4. Docker 이미지 빌드 시 권한 오류 발생
+    - 내용
+        - Dockerfile 작성 후, 빌드를 시도했으나, 'permission denied'에러가 반환됨.
+    - 결과
+        - 사용자를 'docker'그룹에 추가하여 관리자 권한 없이 실행할 수 있게 조치
+        - 'sudo usermod -aG docker $USER' 입력 후, 다시 로그인하여 sudo를 사용하지 않고 Docker 실행 가능.
+<br>
+
+5. 'ModuleNotFoundError: No module named 'psycopg' 에러 발생
+    - 내용
+        - DB연동 후 서버 구동을 시도했으나, ModuleNotFoundError: No module named 'psycopg' 에러 발생.
+    - 결과
+        - PostgreSQL과 Django를 연결하는 모듈인 psycopg2-binary 모듈이 없어서 발생한 문제.
+        - requirements.txt에 psycopg2-binary를 추가하여 해결.
+<br>
+
+6. Route53에서 구매한 도메인 S3버킷에 적용 안되는 현상
+    - 내용
+        - Route53에서 구매한 도메인이 EC2에는 적용되는데, S3에는 적용이 되지 않는 문제가 발생했다.
+    - 결과
+       - S3 버킷명을 도메인과 똑같이 "joongobooks.com"으로 설정하여 해결
+<br>
+
 - 예원님
   - 이슈 : SystemCheckError: System check identified some issues 에러 발생
   - 해결 : auth.User.groups 와 user.User.groups가 충돌해서 발생한 에러였고, 원인을 찾아보니, 두 모델이 공통된 필드를 가지고 있기에 발생하는 충돌이었다. related_name을 추가하여 충돌을 방지하도록 하고, settings.py에서 기존 USER 모델 대신 새로 정의한 USER 모델을 사용하도록 AUTH_USER_MODEL 설정을 추가했다.
@@ -324,6 +374,7 @@ joongobooks
 - 유림님
     - 짧은 기간의 프로젝트에서 기획부터 배포까지 진행하려니 시간이 촉박했지만, 온전히 프로젝트에 집중해서 단기간에 Django 실력을 늘린 것 같아 뿌듯합니다! 이번 프로젝트를 통해 Django도, Github로 협력하는 법도 많이 배워가는 것 같습니다. 처음에 기획했던 기능 구현을 프로젝트 기간 내 다 하지 못한 것은 아쉽지만, 추후에도 기능을 계속 업데이트 해 나가서 보다 완성도있는 프로젝트가 되게 할 예정입니다. 이 프로젝트를 위해 열심히 임해준 팀원들에게 너무 감사합니다!
 - 병훈님
+    - 팀원들과 같이 파트를 나누어서 협업을 하는 과정이 너무 즐거웠습니다. 특히 컨벤션을 정해서 다 같이 하나의 서비스를 구성해 나가는 부분과, 혼자 개발했다면 시도하기 쉽지 않은 기능들을 구현할 수 있어서 좋았습니다. DRF 부분에 있어서는 지식이 없어서 처음에 막막했지만, 팀원들과 스터디를 함께 하며 결국 서비스를 만들어 냈다는 사실이 너무 뿌듯하고 자랑스럽습니다. 정말 큰 성장을 하게 된 프로젝트였고, 마지막까지 낙오 없이 같이 달려온 팀원들이 정말 자랑스럽습니다!
 - 예원님
    - 처음으로 해본 협업이라 많이 미숙한 점도 많았고, 시간도 부족해서 더 많은 것들을 구현하지는 못했다는 아쉬움이 남지만, 이번 프로젝트를 하면서 Django, html, css에 집중할 수 있어서 좋았습니다. 어떻게 구현해야할지 방향성을 고민하고, 방법을 찾아보고 하는 과정이 저의 자양분이 되었으리라 생각합니다. 시간이 부족해서 구현하지 못한 내용들은 앞으로 시간을 갖고 차차 채워나갈 것입니다. 앞으로도 다른 팀 프로젝트에 도전하면서 제 실력을 향상시키고자 하는 의지가 생겼습니다. 이번 프로젝트는 제게 다른 분들과 해본 만큼 저의 실력이 아직 나아갈 곳이 많고, 부족한 면이 많다는 것과 개발의 매력을 알려주어 앞으로도 열심히 하는데 동기부여가 될 것 같습니다. 그리고 저를 도와주시고, 함께 해주시느라 고생한 팀원분들께 정말 감사하다는 인사 남기고 싶습니다.
 
