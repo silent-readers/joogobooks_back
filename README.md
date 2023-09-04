@@ -38,8 +38,11 @@
 ### 배포 URL
 - URL : 🔗http://joongobooks.com
 
-    :rocket: 테스트 ID : admin
-    :rocket: 테스트 Password : admin123!
+    :rocket: 테스트 ID : admin   /       :rocket: 테스트 Password : admin123!
+
+
+### 관련 Repository 주소
+- FrontEnd : https://github.com/silent-readers/joogobooks_front
 
 
 <p align="right"><a href="#top">(Top)</a></p>
