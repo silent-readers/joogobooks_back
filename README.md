@@ -148,7 +148,7 @@ joongobooks
 - 개발기간(23.08.17 ~ 23.09.04)
 <img src="/readme/duration.png">
 
-- 🔗<a href="https://www.notion.so/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5?pvs=4"> Notion에서 Issue 관리</a>
+- 🔗<a href="https://glimmer-velvet-2ce.notion.site/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5"> Notion에서 Issue 관리</a>
 
 - 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
 <p align="right"><a href="#top">(Top)</a></p>
