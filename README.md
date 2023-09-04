@@ -36,7 +36,7 @@
 - openAI api
 
 ### 배포 URL
-- URL : 🔗
+- URL : 🔗http://joongobooks.com
 
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
