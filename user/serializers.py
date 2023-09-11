@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, Profile
+from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,12 +27,12 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    nickname = serializers.CharField(source='user.nickname')
-
-    class Meta:
-        model = Profile
-        fields = ['user', 'nickname', 'profile_img', 'about_me', 'updated_at']
+# class ProfileSerializer(serializers.ModelSerializer):
+#     nickname = serializers.CharField(source='user.nickname')
+#
+#     class Meta:
+#         model = Profile
+#         fields = ['user', 'nickname', 'profile_img', 'about_me', 'updated_at']
 
 
 class myTokenObtainPairSerializer(TokenObtainPairSerializer):
