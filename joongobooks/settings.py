@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'book',
     'user',
     'jjim',
+    'bookreview',
     'recommend',
 ]
 
