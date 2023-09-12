@@ -13,6 +13,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 class ChatbotView(APIView):
+    throttle_scope = 'contacts'
 
     def get(self, request):
         conversations = request.session.get('conversations', [])
@@ -37,8 +38,6 @@ class ChatbotView(APIView):
             stop=None,
             temperature=0.5,
         )
-
-        print(completions)
 
         response = completions.choices[0].text.strip()
 
