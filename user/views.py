@@ -187,6 +187,31 @@ class UserPasswordChangeAPIView(APIView):
         return Response({'message': '현재 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# 비밀번호 재설정
+class UserPasswordResetAPIView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({'message': '해당 유저는 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # 프론트엔드에서 입력
+        new_password = request.data.get('new_password')
+        confirm_password = request.data.get('confirm_password')
+
+        if new_password != confirm_password:
+            return Response({'message': '두 비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(new_password)
+        user.save()
+
+        return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+
+
 # 회원 탈퇴
 class UserDeleteAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
