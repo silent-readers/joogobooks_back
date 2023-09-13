@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from chat.models import Conversation
+from .models import Conversation
 
 
 class ConversationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ['prompt', 'response']
+        fields = '__all__'
         extra_kwargs = {
             'response': {"read_only": True}
         }
