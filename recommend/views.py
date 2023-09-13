@@ -1,7 +1,11 @@
-from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Conversation as ConversationModel
+from .serializers import ConversationSerializer
 
 from dotenv import load_dotenv
 import openai
@@ -14,6 +18,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 class ChatbotView(APIView):
     throttle_scope = 'contacts'
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         conversations = request.session.get('conversations', [])
@@ -51,3 +56,12 @@ class ChatbotView(APIView):
         request.session.modified = True
 
         return self.get(request)
+
+
+class ConversationsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        conversations = ConversationModel.objects.filter(user_id=user_id)
+        serializer = ConversationSerializer(conversations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
