@@ -27,12 +27,12 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-# class ProfileSerializer(serializers.ModelSerializer):
-#     nickname = serializers.CharField(source='user.nickname')
-#
-#     class Meta:
-#         model = Profile
-#         fields = ['user', 'nickname', 'profile_img', 'about_me', 'updated_at']
+class ProfileSerializer(serializers.ModelSerializer):
+    # nickname = serializers.CharField(source='user.nickname')
+
+    class Meta:
+        model = User
+        fields = ['nickname', 'profile_img', 'about_me', 'updated_at']
 
 
 class myTokenObtainPairSerializer(TokenObtainPairSerializer):

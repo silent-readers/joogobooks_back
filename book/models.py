@@ -13,7 +13,6 @@ class Book(models.Model):
     original_price = models.IntegerField("정가")
     selling_price = models.IntegerField("판매가")
     detail_info = models.TextField("상세내용", max_length=1000)
-    sale_condition = models.CharField("판매상태", max_length=10, default="판매중")
     image = models.ImageField("이미지", upload_to='book_image/', blank=True)
     category_choices = (('사회 정치', '사회 정치'), ('소설/시/희곡', '소설/시/희곡'), ('어린이', '어린이'), ('여행', '여행'),
                         ('역사', '역사'), ('예술', '예술'), ('인문',
@@ -46,6 +45,7 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(
         auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.user.nickname} - {self.book.title} - {self.content}'
@@ -56,6 +56,7 @@ class ChildComment(models.Model):
     parent_comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.parent_comment} - {self.user.nickname} - {self.content}'

@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 from joongobooks.settings import SECRET_KEY
 
 from .models import User
-from .serializers import UserSerializer, myTokenObtainPairSerializer
+from .serializers import UserSerializer, myTokenObtainPairSerializer, ProfileSerializer
 
 
 class UserRegisterAPIView(APIView):
@@ -116,56 +116,28 @@ class AuthAPIView(APIView):
         return response
 
 
-# class ProfileView(APIView):
-#     permission_classes = [permissions.AllowAny]
-#
-#     def get(self, request, user_id):
-#         profile = get_object_or_404(Profile, user_id=user_id)
-#         serializer = ProfileSerializer(profile)
-#         return Response(serializer.data)
-#
-#
-# class ProfileCreateView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
-#
-#     def post(self, request, user_id):
-#         nickname = request.data.get('nickname')
-#         profile_img = request.data.get('profile_img')
-#         about_me = request.data.get('about_me')
-#
-#         try:
-#             user_instance = User.objects.get(id=user_id)
-#         except User.DoesNotExist:
-#             return Response({"detail": "User does not exist"}, status=status.HTTP_400_BAD_REQUEST)
-#
-#         profile = Profile.objects.create(
-#             user=user_instance,
-#             profile_img=profile_img,
-#             about_me=about_me
-#         )
-#
-#         # 닉네임 업데이트
-#         user_instance.nickname = nickname
-#         user_instance.save()
-#
-#         serializer = ProfileSerializer(profile)
-#
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#
-#
-# class ProfileUpdateView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
-#
-#     def put(self, request, user_id):
-#         profile = get_object_or_404(Profile, user_id=user_id)
-#         serializer = ProfileSerializer(
-#             profile, data=request.data, partial=True)
-#
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(data=serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ProfileView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, user_id):
+        profile = get_object_or_404(User, id=user_id)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
+
+class ProfileUpdateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request, user_id):
+        profile = get_object_or_404(User, id=user_id)
+        serializer = ProfileSerializer(
+            profile, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # 비밀번호 변경
