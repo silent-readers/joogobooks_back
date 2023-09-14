@@ -15,6 +15,9 @@ urlpatterns = [
     # 비밀번호 변경
     path('auth/<int:user_id>/changepassword/',
          views.UserPasswordChangeAPIView.as_view()),
+    
+    # 비밀번호 재설정
+    path('resetpassword/', views.UserPasswordResetAPIView.as_view()),
 
     # 회원탈퇴
     path('auth/<int:user_id>/delete/', views.UserDeleteAPIView.as_view()),
