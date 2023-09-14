@@ -23,10 +23,10 @@ urlpatterns = [
     path('profile/<int:user_id>/', views.ProfileView.as_view()),
 
     # 프로필 생성
-    path('profile/<int:user_id>/create', views.ProfileCreateView.as_view()),
+    # path('profile/<int:user_id>/create/', views.ProfileCreateView.as_view()),
 
     # 프로필 업데이트
-    path('profile/<int:user_id>/update', views.ProfileUpdateView.as_view()),
+    path('profile/<int:user_id>/update/', views.ProfileUpdateView.as_view()),
 
     # simplejwt 에서 제공하는 기본 JWT 인증
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
