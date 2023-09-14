@@ -22,9 +22,6 @@ urlpatterns = [
     # 프로필 조회
     path('profile/<int:user_id>/', views.ProfileView.as_view()),
 
-    # 프로필 생성
-    # path('profile/<int:user_id>/create/', views.ProfileCreateView.as_view()),
-
     # 프로필 업데이트
     path('profile/<int:user_id>/update/', views.ProfileUpdateView.as_view()),
 
