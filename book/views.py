@@ -105,6 +105,7 @@ class BookSearchFilter(FilterSet):
 
 class BookSearchView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
+    pagination_class = BookPagination
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
