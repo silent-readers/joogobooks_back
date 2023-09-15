@@ -32,9 +32,10 @@ class BookReviewHashtagSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReviewHashtag
         fields = '__all__'
-        read_only_fields = ['bookreview','writer']
+        # read_only_fields = ['bookreview','writer']
 
 class BookReviewHashtagCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReviewHashtag
-        fields = ['tagname']
+        fields = '__all__'
+        read_only_fields = ['bookreview','writer']

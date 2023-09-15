@@ -28,7 +28,16 @@ class BookReviewSearchFilter(FilterSet):
     class Meta:
         model = BookReview
         fields = {
-            'book_title': ['icontains']
+            'book_title': ['icontains'],
+        }
+        
+class BookReviewHashtagFilter(FilterSet):
+    
+    
+    class Meta:
+        model = BookReviewHashtag
+        fields = {
+            'tagname' : ['exact'],
         }
 
 class BookReviewListView(generics.ListAPIView):
@@ -39,7 +48,23 @@ class BookReviewListView(generics.ListAPIView):
     filterset_class = BookReviewSearchFilter
     ordering =['view_count', 'created_at']
     
-
+    
+class BookReviewHashtagSearchView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = BookReviewHashtag.objects.all()
+    serializer_class = BookReviewHashtagSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_class = BookReviewHashtagFilter
+    
+# class BookReviewSearchView(APIView):
+#     permission_classes = [permissions.AllowAny]
+#     serializer_class = BookReviewListSerializer
+#     def get(self, request, *args, **kwargs):
+#         hashtagquery = BookReviewHashtagFilter(request.GET, queryset = BookReviewHashtag.objects.all())
+#         bookreviews = 
+#     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+#     filterset_class = BookReviewSearchFilter
+#     ordering = ['view_count', 'created_at']
 class BookReviewCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = BookReview.objects.all()

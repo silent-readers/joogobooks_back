@@ -13,7 +13,7 @@ class BookReview(models.Model):
     review = models.TextField("서평", max_length=1000)
     created_at = models.DateTimeField("작성시간", auto_now_add=True)
     view_count = models.IntegerField("조회수", default=0)
-    # purchased_book = models.ForeignKey('book.Book', on_delete=models.CASCADE, related_name='reviews')
+
 
     def __str__(self):
         return f"책 제목 : {self.book_title} / 책 저자 : {self.book_author} / 작성자 : {self.review_writer} / 서평 제목 : {self.review_title} / 평점 : {self.rating}/10"
