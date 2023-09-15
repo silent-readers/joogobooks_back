@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import BookReviewListView, BookReviewDetailView, BookReviewCreateView, BookReviewUpdateView, BookReviewDeleteView, BookReviewHashtagListView
+from .views import BookReviewListView, BookReviewDetailView, BookReviewCreateView, BookReviewUpdateView, BookReviewDeleteView, BookReviewHashtagListView, BookReviewHashtagCreateView, BookReviewHashtagDeleteView
 
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path('<int:bookreview_id>/delete/', BookReviewDeleteView.as_view(), name='bookreview-delete'),
     ### 해시태그
     path('<int:bookreview_id>/hashtag/', BookReviewHashtagListView.as_view(), name="bookreview-tag-list"),
-    # path('<int:bookreview_id>/hashtag/write/', Book),
-    # path('<int:bookreview_id>/hashtag/<int:hashtag_id>/delete/'),
+    path('<int:bookreview_id>/hashtag/create/', BookReviewHashtagCreateView.as_view(), name='bookreview-tag-create'),
+    path('hashtag/<int:hashtag_id>/delete/', BookReviewHashtagDeleteView.as_view(), name='bookreview-tag-delete'),
     
 ]
