@@ -17,3 +17,11 @@ class BookReview(models.Model):
 
     def __str__(self):
         return f"책 제목 : {self.book_title} / 책 저자 : {self.book_author} / 작성자 : {self.review_writer} / 서평 제목 : {self.review_title} / 평점 : {self.rating}/10"
+
+class BookReviewHashtag(models.Model):
+    bookreview = models.ForeignKey("BookReview", on_delete=models.CASCADE)
+    tagname = models.CharField("해시태그",max_length=10)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name

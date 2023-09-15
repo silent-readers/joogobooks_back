@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import BookReview
+from .models import BookReview, BookReviewHashtag
 from book.models import Book
 
-
+### 서평
 class BookReviewListSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -10,7 +10,7 @@ class BookReviewListSerializer(serializers.ModelSerializer):
         exclude = ['review']
 
 
-class BookEditSerializer(serializers.ModelSerializer):
+class BookReviewEditSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookReview
@@ -25,3 +25,16 @@ class BookReviewSerializer(serializers.ModelSerializer):
         model = BookReview
         fields = '__all__'
         read_only_fields = ['view_count']
+        
+### 해시태그
+class BookReviewHashtagSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = BookReviewHashtag
+        fields = '__all__'
+        read_only_fields = ['bookreview','writer']
+
+class BookReviewHashtagCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookReviewHashtag
+        fields = ['tagname']

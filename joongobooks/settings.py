@@ -164,9 +164,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    # ],
     'DEFAULT_PARSER_CLASSES': [  # request.data 속성에 엑세스 할 때 사용되는 파서 지정
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',

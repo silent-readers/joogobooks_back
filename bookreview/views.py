@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
-from .models import BookReview
-from .serializers import BookReviewListSerializer, BookReviewSerializer, BookEditSerializer
+from .models import BookReview, BookReviewHashtag
+from .serializers import BookReviewListSerializer, BookReviewSerializer, BookReviewEditSerializer, BookReviewHashtagSerializer, BookReviewHashtagCreateSerializer
 
 from book.models import Book
 
@@ -13,6 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django_filters.rest_framework import FilterSet
 # Create your views here.
 
+### 서평
 class IsBookReviewAuthor(permissions.BasePermission):
     
     def has_object_permission(self, request, view, bookreview):
@@ -42,10 +43,10 @@ class BookReviewListView(generics.ListAPIView):
 class BookReviewCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = BookReview.objects.all()
-    serializer_class = BookEditSerializer
+    serializer_class = BookReviewEditSerializer
     
     def post(self, request, *args, **kwargs):
-        serializer = BookEditSerializer(data=request.data)
+        serializer = BookReviewEditSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             purchased_book_id = request.data.get('purchased_book')
             purchased_book = get_object_or_404(Book, id=purchased_book_id)
@@ -73,13 +74,13 @@ class BookReviewUpdateView(APIView):
     def get(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
         if request.user == bookreview.review_writer:
-            serializer = BookEditSerializer(bookreview)
+            serializer = BookReviewEditSerializer(bookreview)
             return Response(serializer.data)
         return Response(status=status.HTTP_403_FORBIDDEN)
     
     def put(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
-        serializer = BookEditSerializer(bookreview, data=request.data)
+        serializer = BookReviewEditSerializer(bookreview, data=request.data)
         if serializer.is_valid():
             if request.user == bookreview.review_writer:
                 serializer.save()
@@ -97,3 +98,23 @@ class BookReviewDeleteView(APIView):
             bookreview.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_403_FORBIDDEN)
+    
+### 해시태그
+class BookReviewHashtagListView(APIView):
+    permission_classes=[permissions.AllowAny]
+    def get(self, request, bookreview_id):
+        bookreview = get_object_or_404(BookReview,id=bookreview_id)
+        hashtags = BookReviewHashtag.objects.filter(bookreview=bookreview)
+        serializer = BookReviewHashtagSerializer(hashtags, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class BookReviewHashtagCreateView(APIView):
+    # permission_classes = [permissions.IsAuthenticated, IsBookReviewAuthor]
+    permission_classes=[permissions.AllowAny]
+    def post(self, request, bookreview_id):
+        bookreview = get_object_or_404(BookReview, id=bookreview_id)
+        if request.user == bookreview.review_writer:
+            serializer = BookReviewHashtagCreateSerializer(bookreview)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
+# class 
