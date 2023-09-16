@@ -19,7 +19,6 @@ class BookReviewEditSerializer(serializers.ModelSerializer):
 
 
 class BookReviewSerializer(serializers.ModelSerializer):
-    purchased_book = serializers.PrimaryKeyRelatedField(queryset=Book.objects.all())
 
     class Meta:
         model = BookReview
@@ -32,10 +31,16 @@ class BookReviewHashtagSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReviewHashtag
         fields = '__all__'
-        # read_only_fields = ['bookreview','writer']
 
 class BookReviewHashtagCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReviewHashtag
         fields = '__all__'
         read_only_fields = ['bookreview','writer']
+        
+class BookReviewHashtagSearchSerializer(serializers.ModelSerializer):
+    
+    bookreview = BookReviewSerializer()
+    class Meta:
+        model = BookReviewHashtag
+        fields = '__all__'

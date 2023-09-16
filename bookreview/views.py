@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import BookReview, BookReviewHashtag
-from .serializers import BookReviewListSerializer, BookReviewSerializer, BookReviewEditSerializer, BookReviewHashtagSerializer, BookReviewHashtagCreateSerializer
+from .serializers import BookReviewListSerializer, BookReviewSerializer, BookReviewEditSerializer, BookReviewHashtagSerializer, BookReviewHashtagCreateSerializer, BookReviewHashtagSearchSerializer
 
 from book.models import Book
 
@@ -40,6 +40,7 @@ class BookReviewHashtagFilter(FilterSet):
             'tagname' : ['exact'],
         }
 
+
 class BookReviewListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = BookReview.objects.all()
@@ -52,19 +53,11 @@ class BookReviewListView(generics.ListAPIView):
 class BookReviewHashtagSearchView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = BookReviewHashtag.objects.all()
-    serializer_class = BookReviewHashtagSerializer
+    serializer_class = BookReviewHashtagSearchSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = BookReviewHashtagFilter
+
     
-# class BookReviewSearchView(APIView):
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = BookReviewListSerializer
-#     def get(self, request, *args, **kwargs):
-#         hashtagquery = BookReviewHashtagFilter(request.GET, queryset = BookReviewHashtag.objects.all())
-#         bookreviews = 
-#     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-#     filterset_class = BookReviewSearchFilter
-#     ordering = ['view_count', 'created_at']
 class BookReviewCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = BookReview.objects.all()
@@ -73,9 +66,6 @@ class BookReviewCreateView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = BookReviewEditSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # purchased_book_id = request.data.get('purchased_book')
-            # purchased_book = get_object_or_404(Book, id=purchased_book_id)
-            # purchased_book_writer = purchased_book.writer
             serializer.save(review_writer = request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -83,7 +73,7 @@ class BookReviewCreateView(APIView):
 
 
 class BookReviewDetailView(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
