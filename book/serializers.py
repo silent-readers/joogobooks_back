@@ -6,6 +6,9 @@ class BookSerializer(serializers.ModelSerializer):
 
     sale_condition_display = serializers.CharField(
         source='get_sale_condition_display', read_only=True)
+    writer_nickname = serializers.CharField(
+        source='writer.nickname', read_only=True)
+    
 
     class Meta:
         model = Book
