@@ -170,7 +170,7 @@ class BookLikeAPIVIew(UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookLikeSerializer
 
-    def update(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         data = {'like' : instance.like + 1}
