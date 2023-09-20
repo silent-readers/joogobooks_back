@@ -27,12 +27,14 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-# class ProfileSerializer(serializers.ModelSerializer):
-#     nickname = serializers.CharField(source='user.nickname')
-#
-#     class Meta:
-#         model = Profile
-#         fields = ['user', 'nickname', 'profile_img', 'about_me', 'updated_at']
+class ProfileSerializer(serializers.ModelSerializer):
+    date_joined = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class myTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -51,7 +53,5 @@ class myTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # 정보 더하기
-        token['username'] = user.username,
-        token['email'] = user.email,
-        token['nickname'] = user.nickname
+        token['username'] = user.username
         return token
