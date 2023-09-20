@@ -31,7 +31,7 @@ class BookListView(APIView, PaginationHandlerMixin):
     serializer_class = BookSerializer
 
     def get(self, request, *args, **kwargs):
-        booklist = Book.objects.all()
+        booklist = Book.objects.all().select_related('writer')
         page = self.paginate_queryset(booklist)
         if page is not None:
             serializer = self.get_paginated_response(
