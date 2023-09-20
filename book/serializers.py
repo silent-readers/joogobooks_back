@@ -26,3 +26,9 @@ class ChildCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChildComment
         fields = '__all__'
+
+
+class BookLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['like']

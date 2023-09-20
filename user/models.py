@@ -48,7 +48,7 @@ class User(AbstractUser):
     last_login = models.DateTimeField("마지막 로그인 시간", null=True, blank=True)
     date_joined = models.DateTimeField("가입일", auto_now_add=True)
     nickname = models.CharField(
-        "닉네임", max_length=20, unique=True)
+        "닉네임", max_length=20, unique=True, null=True, default="DefaultNickname")
     profile_img = models.ImageField(
         "프로필이미지", upload_to='profile/', default='profile/main_profile_img.png')
     about_me = models.TextField("자기소개", null=True, blank=True)
