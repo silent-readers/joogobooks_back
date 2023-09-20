@@ -20,6 +20,7 @@ class Book(models.Model):
                         ('자연과학', '자연과학'), ('잡지', '잡지'), ('종교', '종교'), ('청소년', '청소년'))
     category = models.CharField(
         max_length=20, choices=category_choices, null=True)
+    like = models.PositiveSmallIntegerField('LIKE', default=0)
 
     class Meta:
         ordering = ["-id"]
