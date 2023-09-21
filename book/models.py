@@ -21,6 +21,7 @@ class Book(models.Model):
     category = models.CharField(
         max_length=20, choices=category_choices, null=True)
     like = models.PositiveSmallIntegerField('LIKE', default=0)
+    liked_by = models.ManyToManyField(User, related_name='liked_books', blank=True)
 
     class Meta:
         ordering = ["-id"]
