@@ -1,7 +1,9 @@
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import BookListView, BookCreateView, BookDetailView, BookUpdateView, BookDeleteView, BookSearchView, CommentWriteView, CommentDeleteView, ChildCommentCreateView, ChildCommentDeleteView, BookLikeAPIVIew
+from .views import BookListView, BookCreateView, BookDetailView, BookUpdateView, BookDeleteView, BookSearchView, \
+    CommentWriteView, CommentDeleteView, ChildCommentCreateView, ChildCommentDeleteView, BookLikeAPIVIew, \
+    BookDisLikeAPIVIew
 
 urlpatterns = [
     # 책 CRUD 관련 url
@@ -23,5 +25,6 @@ urlpatterns = [
          ChildCommentDeleteView.as_view()),
 
     # 좋아요 기능 url
-    path('post/<int:pk>/like/', BookLikeAPIVIew.as_view()),
+    path('<int:pk>/like/', BookLikeAPIVIew.as_view()),
+    path('<int:pk>/dislike/', BookDisLikeAPIVIew.as_view()),
 ]

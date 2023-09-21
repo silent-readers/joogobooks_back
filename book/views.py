@@ -182,3 +182,20 @@ class BookLikeAPIVIew(UpdateAPIView):
             instance._prefetched_objects_cache = {}
 
         return Response(data['like'])
+
+class BookDisLikeAPIVIew(UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookLikeSerializer
+
+    def patch(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        data = {'like' : instance.like - 1}
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(data['like'])
