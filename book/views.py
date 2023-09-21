@@ -165,7 +165,6 @@ class ChildCommentDeleteView(APIView):
         childcomment.delete()
         return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
 
-
 class BookLikeAPIVIew(UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookLikeSerializer
@@ -173,7 +172,18 @@ class BookLikeAPIVIew(UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        data = {'like' : instance.like + 1}
+
+        # 사용자가 이미 좋아요를 눌렀는지 확인
+        if request.user in instance.liked_by.all():
+            return Response({'detail': '이미 좋아요를 눌렀습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 좋아요 증가
+        instance.like += 1
+        instance.liked_by.add(request.user)
+        instance.save()
+
+        data = {'like': instance.like}
+
         serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
