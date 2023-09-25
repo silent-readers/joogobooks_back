@@ -182,12 +182,14 @@ class BookLikeAPIVIew(UpdateAPIView):
         instance.liked_by.add(request.user)
         instance.save()
 
+        # 변경된 데이터 serializer에 반영
         data = {'like': instance.like}
 
         serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
+        # 객체 최적화 및 메모리 관리
         if getattr(instance, '_prefetched_objects_cache', None):
             instance._prefetched_objects_cache = {}
 
@@ -201,10 +203,12 @@ class BookDisLikeAPIVIew(UpdateAPIView):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
 
+        # 이미 좋아요했던 확인 여부를 리스트에서 삭제(다시 좋아요를 누를 수 있게끔)
         if request.user in instance.liked_by.all():
             instance.liked_by.remove(request.user)
             instance.save()
 
+        # 좋아요 -1 이후 serializer에 반영
         data = {'like' : instance.like - 1}
         serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
