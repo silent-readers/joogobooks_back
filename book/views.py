@@ -166,7 +166,6 @@ class ChildCommentDeleteView(APIView):
         childcomment.delete()
         return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
 
-
 class BookLikeAPIVIew(UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookLikeSerializer
@@ -174,7 +173,44 @@ class BookLikeAPIVIew(UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        data = {'like' : instance.like + 1}
+
+        # 사용자가 이미 좋아요를 눌렀는지 확인
+        if request.user in instance.liked_by.all():
+            return Response({'detail': '이미 좋아요를 눌렀습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 좋아요 증가
+        instance.like += 1
+        instance.liked_by.add(request.user)
+        instance.save()
+
+        # 변경된 데이터 serializer에 반영
+        data = {'like': instance.like}
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        # 객체 최적화 및 메모리 관리
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(data['like'])
+
+class BookDisLikeAPIVIew(UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookLikeSerializer
+
+    def patch(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+
+        # 이미 좋아요했던 확인 여부를 리스트에서 삭제(다시 좋아요를 누를 수 있게끔)
+        if request.user in instance.liked_by.all():
+            instance.liked_by.remove(request.user)
+            instance.save()
+
+        # 좋아요 -1 이후 serializer에 반영
+        data = {'like' : instance.like - 1}
         serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
