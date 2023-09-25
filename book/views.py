@@ -200,6 +200,11 @@ class BookDisLikeAPIVIew(UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
+
+        if request.user in instance.liked_by.all():
+            instance.liked_by.remove(request.user)
+            instance.save()
+
         data = {'like' : instance.like - 1}
         serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
