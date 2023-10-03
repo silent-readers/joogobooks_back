@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'jjim',
     'bookreview',
     'recommend',
+    'chat',
 ]
 
 MIDDLEWARE = [
