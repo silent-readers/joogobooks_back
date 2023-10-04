@@ -112,7 +112,19 @@ class BookSearchView(generics.ListAPIView):
     filterset_class = BookSearchFilter
     ordering = ['uploaded_at', 'selling_price']
 
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    객체의 소유자만 쓰기 권한을 허용합니다.
+    """
 
+    def has_object_permission(self, request, view, obj):
+        # 읽기 권한은 모든 요청에 허용되므로,
+        # GET, HEAD 또는 OPTIONS 요청에 대해서는 항상 True를 반환합니다.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # 쓰기 권한은 객체의 소유자에게만 허용됩니다.
+        return obj.user == request.user
 class CommentWriteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CommentSerializer
@@ -139,7 +151,7 @@ class CommentWriteView(APIView):
 class CommentDeleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, book_id):
+    def delete(self, request, book_id):
         comment = Comment.objects.get(pk=book_id)
         comment.delete()
         return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
@@ -162,12 +174,16 @@ class ChildCommentCreateView(APIView):
 
 
 class ChildCommentDeleteView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
-    def post(self, request, parent_commnet_id):
-        childcomment = ChildComment.objects.get(pk=parent_commnet_id)
-        childcomment.delete()
-        return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, parent_comment_id, child_comment_id):
+        try:
+            child_comment = ChildComment.objects.get(id=child_comment_id, parent_comment_id=parent_comment_id)
+        except ChildComment.DoesNotExist:
+            return Response({'error': '대댓글을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
+        child_comment.delete()
+        return Response({'message': '대댓글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
 class BookLikeAPIVIew(UpdateAPIView):
     queryset = Book.objects.all()
