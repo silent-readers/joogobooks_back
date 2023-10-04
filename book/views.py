@@ -115,17 +115,17 @@ class BookSearchView(generics.ListAPIView):
 
 class CommentWriteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serielizer_class = CommentSerializer
+    serializer_class = CommentSerializer
 
     def get(self, request, book_id):
         comments = Comment.objects.filter(book_id=book_id)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_create(self, serializer):
-        book_id = self.kwargs.get('book_id')
-        book = get_object_or_404(Book, id=book_id)
-        serializer.save(user=self.request.user, book=book)
+    # def perform_create(self, serializer):
+    #     book_id = self.kwargs.get('book_id')
+    #     book = get_object_or_404(Book, id=book_id)
+    #     serializer.save(user=self.request.user, book=book)
 
     def post(self, request, book_id):
         serializer = CommentSerializer(data=request.data)
@@ -133,7 +133,7 @@ class CommentWriteView(APIView):
         if serializer.is_valid():
             comment = serializer.save(user=request.user, book_id=book_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentDeleteView(APIView):
