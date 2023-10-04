@@ -112,18 +112,16 @@ class BookSearchView(generics.ListAPIView):
     filterset_class = BookSearchFilter
     ordering = ['uploaded_at', 'selling_price']
 
+# 객체 사용자만 사용할 수 있게끔 하는 권한 기능
 class IsOwnerOrReadOnly(permissions.BasePermission):
-    """
-    객체의 소유자만 쓰기 권한을 허용합니다.
-    """
 
     def has_object_permission(self, request, view, obj):
-        # 읽기 권한은 모든 요청에 허용되므로,
-        # GET, HEAD 또는 OPTIONS 요청에 대해서는 항상 True를 반환합니다.
+        # 읽기 권한은 모든 요청에 허용
+        # GET요청에 대해서는 항상 True.
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        # 쓰기 권한은 객체의 소유자에게만 허용됩니다.
+        # 쓰기 권한은 객체의 소유자에게만 허용.
         return obj.user == request.user
 class CommentWriteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
