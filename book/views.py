@@ -149,10 +149,14 @@ class ChildCommentCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, parent_comment_id):
+        try:
+            parent_comment = Comment.objects.get(id=parent_comment_id)
+        except Comment.DoesNotExist:
+            return Response({'error': '부모 댓글을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
         serializer = ChildCommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user,
-                            parent_comment_id=parent_comment_id)
+            serializer.save(user=request.user, parent_comment=parent_comment)  # 부모 댓글 설정.
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
