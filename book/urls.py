@@ -21,7 +21,7 @@ urlpatterns = [
     path('<int:book_id>/comment/delete/', CommentDeleteView.as_view()),
     path('comment/<int:parent_comment_id>/childcomment/create/',
          ChildCommentCreateView.as_view()),
-    path('comment/<int:parent_comment_id>/childcomment/delete/',
+    path('comment/<int:parent_comment_id>/childcomment/<int:child_comment_id>/delete/',
          ChildCommentDeleteView.as_view()),
 
     # 좋아요 기능 url

@@ -113,20 +113,30 @@ class BookSearchView(generics.ListAPIView):
     filterset_class = BookSearchFilter
     ordering = ['uploaded_at', 'selling_price']
 
+# 객체 사용자만 사용할 수 있게끔 하는 권한 기능
+class IsOwnerOrReadOnly(permissions.BasePermission):
 
+    def has_object_permission(self, request, view, obj):
+        # 읽기 권한은 모든 요청에 허용
+        # GET요청에 대해서는 항상 True.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # 쓰기 권한은 객체의 소유자에게만 허용.
+        return obj.user == request.user
 class CommentWriteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serielizer_class = CommentSerializer
+    serializer_class = CommentSerializer
 
     def get(self, request, book_id):
         comments = Comment.objects.filter(book_id=book_id)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_create(self, serializer):
-        book_id = self.kwargs.get('book_id')
-        book = get_object_or_404(Book, id=book_id)
-        serializer.save(user=self.request.user, book=book)
+    # def perform_create(self, serializer):
+    #     book_id = self.kwargs.get('book_id')
+    #     book = get_object_or_404(Book, id=book_id)
+    #     serializer.save(user=self.request.user, book=book)
 
     def post(self, request, book_id):
         serializer = CommentSerializer(data=request.data)
@@ -134,13 +144,13 @@ class CommentWriteView(APIView):
         if serializer.is_valid():
             comment = serializer.save(user=request.user, book_id=book_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentDeleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, book_id):
+    def delete(self, request, book_id):
         comment = Comment.objects.get(pk=book_id)
         comment.delete()
         return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
@@ -150,21 +160,29 @@ class ChildCommentCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, parent_comment_id):
+        try:
+            parent_comment = Comment.objects.get(id=parent_comment_id)
+        except Comment.DoesNotExist:
+            return Response({'error': '부모 댓글을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
         serializer = ChildCommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user,
-                            parent_comment_id=parent_comment_id)
+            serializer.save(user=request.user, parent_comment=parent_comment)  # 부모 댓글 설정.
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChildCommentDeleteView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
-    def post(self, request, parent_commnet_id):
-        childcomment = ChildComment.objects.get(pk=parent_commnet_id)
-        childcomment.delete()
-        return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, parent_comment_id, child_comment_id):
+        try:
+            child_comment = ChildComment.objects.get(id=child_comment_id, parent_comment_id=parent_comment_id)
+        except ChildComment.DoesNotExist:
+            return Response({'error': '대댓글을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
+        child_comment.delete()
+        return Response({'message': '대댓글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
 class BookLikeAPIVIew(UpdateAPIView):
     queryset = Book.objects.all()

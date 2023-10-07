@@ -16,19 +16,19 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    # created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'content', 'created_at']
 
 
 class ChildCommentSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    # created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = ChildComment
-        fields = '__all__'
+        fields = ['id', 'content', 'created_at']
 
 
 class BookLikeSerializer(serializers.ModelSerializer):
