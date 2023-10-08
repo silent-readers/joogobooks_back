@@ -18,7 +18,7 @@ urlpatterns = [
 
     # 댓글기능 url
     path('<int:book_id>/comment/create/', CommentWriteView.as_view()),
-    path('<int:book_id>/comment/delete/', CommentDeleteView.as_view()),
+    path('comment/<int:comment_id>/delete/', CommentDeleteView.as_view()),
     path('comment/<int:parent_comment_id>/childcomment/create/',
          ChildCommentCreateView.as_view()),
     path('comment/<int:parent_comment_id>/childcomment/<int:child_comment_id>/delete/',
