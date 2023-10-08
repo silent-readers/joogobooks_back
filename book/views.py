@@ -147,12 +147,16 @@ class CommentWriteView(APIView):
 
 
 class CommentDeleteView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
-    def delete(self, request, book_id):
-        comment = Comment.objects.get(pk=book_id)
+    def delete(self, request, comment_id):
+        try:
+            comment = Comment.objects.get(id=comment_id)
+        except Comment.DoesNotExist:
+            return Response({'error': '댓글을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
         comment.delete()
-        return Response({'message': 'Comment Delete!'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': '댓글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class ChildCommentCreateView(APIView):
