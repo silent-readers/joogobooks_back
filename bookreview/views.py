@@ -121,7 +121,7 @@ class BookReviewDeleteView(APIView):
 
 
 class BookReviewHashtagListView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, bookreview_id):
         bookreview = get_object_or_404(BookReview, id=bookreview_id)
