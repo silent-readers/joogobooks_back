@@ -15,6 +15,7 @@ class BookReviewListSerializer(serializers.ModelSerializer):
 
 
 class BookReviewEditSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%Y-%m-%d")
 
     class Meta:
         model = BookReview
