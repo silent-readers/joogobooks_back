@@ -3,39 +3,168 @@
 ## 개요
 
 - :dizzy: Joongobooks는 중고도서거래를 위한 서비스입니다.
-- :technologist: 더이상 읽지 않거나 필요하지 않은 소장 중인 책을 홈페이지에 등록할 수 있고, 사용자들이 필요로 하는 도서를 찾아 확인 후 구매할 수 있습니다.
+- :technologist: 더이상 읽지 않거나 필요하지 않은 개인이 소장 중인 책을 홈페이지에 등록할 수 있고, 사용자들이 필요로 하는 도서를 찾아 확인 후 구매할 수 있습니다.
 - :robot: AI chat-bot을 이용해 책을 추천받는 서비스를 이용할 수 있습니다.
 
 ## 목차
 1. [프로젝트 목표](#goal)
-2. [개발 환경 및 배포 URL](#dev)
-3. [프로젝트 구조](#tree)
-4. [역할 분담](#role)
-5. [개발 기간](#task)
-6. [UI](#ui)
-7. [페이지 기능](#pages)
-8. [개발하며 겪은 이슈](#issues)
-9. [마무리](#realization)
-10. [고도화 일정](#advancement)
+2. [팀원 소개 및 역할](#member)
+3. [개발 기간 및 프로젝트 관리](#task)
+4. [개발 환경 및 배포 URL](#dev)
+5. [프로젝트 구조 및 API 명세서](#tree)
+6. [역할 분담](#role)
+7. [UI](#ui)
+8. [페이지 기능](#pages)
+9. [개발하며 겪은 이슈](#issues)
+10. [마무리](#realization)
+
 
 <hr>
 
 ## <span id="goal">1. 프로젝트 목표</span>
+### :card_file_box: 프로젝트 목표
+- 중고 도서 거래를 위한 서비스에서 한 발 더 나아가 책을 좋아하는 사람들을 위한 서비스를 제공합니다.
 - 개인이 쉽게 자신의 소장도서를 판매할 수 있는 플랫폼을 제공합니다.
 - 등록된 도서 목록을 누구나 쉽게 확인 가능하도록 하여 잠재적인 고객들이 쉽게 접근 가능할 수 있는 플랫폼을 제공합니다.
 - 개인의 소장도서를 상품으로 등록하여 수익 창출이 가능할 수 있게 도와주는 온라인 장터입니다.
 - openAI 에서 제공한 API를 활용하여 책을 추천하는 AI chatbot을 구현해 책을 추천받을 수 있는 서비스를 제공합니다.
 
+### :bulb: 벤치마킹
+|![benchmark1](readme/benchmarking1.png)|![benchmark2](readme/benchmarking2.png)|
+|:---------:|:---------:|
+|<strong>중고물건 구매를 위한 편의기능</strong>|<strong>중고서적 상품정보 UI</strong>|
+
+#### · 중고물건 구매를 위한 편의기능
+- 가입한 사용자 누구나 쉽게 자신의 물건을 등록하여 판매할 수 있습니다.
+- 가입한 사용자가 판매 물건에 대해 직접 정보를 입력하여 구매자에게 판매 물건에 대한 정보를 제공합니다.
+- 실시간으로 소통하며 판매자와 구매자가 판매 물건에 대한 금액을 흥정할 수 있습니다.
+- 간편결제, 실시간 계좌이체 등 다양한 방법으로 구매자가 판매금액을 판매자에게 지불할 수 있습니다.
+
+#### · 중고서적 상품정보 UI
+- 책에 관한 다양한 정보를 제공합니다.
+- 인문, 사회 등 카테고리별로 도서를 구분하고 카테고리를 선택하여 책을 검색할 수 있습니다.
+- 사용자가 책에 대한 서평을 남겨 다른 이용자들이 이를 통해 다양한 책에 대한 정보를 접할 수 있고, 다양한 의견을 들을 수 있습니다.
+
+<br>
+
+### :white_check_mark: Django Rest Famework 선택 이유
+- Front영역과 Back 영역을 나누어 개발할 수 있다는 장점이 있습니다. 이러한 병렬개발을 통해 Front-end와 Back-end 개발을 동시에 진행할 수 있고, 모듈성을 높여 코드의 재사용성이 높아집니다.
+- Django의 강력한 기능과 함께 RESTful API를 개발하는 데 필요한 여러 도구와 기능을 제공합니다. 이를 통해 개발자들은 빠르게 API를 구축할 수 있으며, 반복적인 작업을 최소화할 수 있습니다.
+- DRF는 데이터 모델을 JSON 또는 다른 형식으로 직렬화하고 역직렬화하는 데 사용되는 시리얼라이저를 제공합니다. 이를 통해 데이터의 변환 및 유효성 검사를 쉽게 수행할 수 있습니다.
+- DRF는 API 문서화를 위한 기능을 내장하고 있습니다. 이를 통해 API 엔드포인트, 요청 및 응답 형식에 대한 문서를 자동으로 생성하고 관리할 수 있습니다. 대표적으로 Swagger와 같은 도구와 연동하여 API 문서를 생성할 수 있습니다.
+
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
 
-## <span id="dev">2. 개발환경 및 배포 URL</span>
+## <span id="member">2. 팀원 소개 및 역할</span>
+
+#### :technologist: 안녕하세요! Team '조용하고 강하조' 입니다.
+
+|   이슬기   |   김승겸   |   신유림   |   이병훈   |   차예원   |
+|:---------:|:---------:|:---------:|:---------:|:---------:|
+|![profile1](readme/profile1.png)|![profile2](readme/profile2.png)|![profile3](readme/profile3.png)|![profile4](readme/profile4.png)|![profile5](readme/profile5.png)|
+|<a href="https://github.com/simseulnyang?tab=repositories">🔗simseulnyang</a>|<a href="https://github.com/k2h2j3">🔗k2h2j3</a>|<a href="https://github.com/yoursin0330">🔗yoursin0330</a>|<a href="https://github.com/nekopurr">🔗nekopurr</a>|<a href="https://github.com/won0201">🔗won0201</a>|
+
+<br>
+
+### 역할분담
+
+<img src="/readme/TeamProject - Joongobooks.png">
+
+<p align="right"><a href="#top">(Top)</a></p>
+<br>
+
+## <span id="task">3. 개발 기간 및 프로젝트 관리</span>
+### 3.1. 1차 개발기간(23.08.17 ~ 23.09.04)
+
+<img src="/readme/duration.png">
+
+#### 1차
+- 🔐<strong>계정</strong>
+    - 회원가입
+    - 로그인/로그아웃
+    - 프로필 생성/수정
+- :computer: <strong>중고도서 정보</strong>
+    - 중고도서 이미지 파일 업로드, 미리보기
+    - 등록 / 수정 / 삭제
+    - 중고도서 목록 보기
+- :robot: <strong>AI catbot (recommend)</strong>
+    - chatbot 질문하기 / 답변받기
+    - 하루 2번 사용가능
+
+#### 총 소요시간 및 GitHub Commit Count
+- 총 소요시간 : 11H * 12일 = 132H
+- GitHub Commit Count
+    - 문서 작성 기준 front 영역에서 139회, backend 영역에서 140회
+    - <strong>총 279회</strong>
+
+### 3.2. 2차 개발기간 - 고도화작업 (23.09.08 ~ 23.10.12)
+
+<img src="/readme/duration2.png">
+
+#### 2차
+- :bug: <strong>오류 수정</strong>
+    - access token 유효시간 이후 refresh token 통해 재발급 받을 수 있도록 수정
+    - 브라우저 종료 시 자동 로그아웃 될 수 있도록 수정
+    - Profile 업데이트 시 업데이트가 불가능하던 오류 수정
+    - nickname이 undefined로 보이는 오류 수정
+    - 변경된 Profile img가 이전과 동일하게 보이던 오류 수정
+    - 판매자 닉네임이 로그인 유저로 보이던 오류 수정
+    - 목록에서 Pagination 동작 오류 해결
+    - 검색 시 모든 데이터가 출력되던 오류 수정
+    - 목록 번호글 오류 수정
+    - AI chabot 제한 사용 횟수 적용되지 않던 오류 해결
+    - AI chatbot 대화내용 보이지 않던 오류 해결
+- 🔐<strong>계정</strong>
+    - User-Profile model 통합
+    - 비밀번호 설정 기능
+- :memo: <strong>서평</strong>
+    - 서평 목록 보기
+    - 등록 / 수정 / 삭제
+- :white_check_mark: <strong>좋아요</strong>
+    - 좋아요 추가 / 삭제
+
+#### 총 소요시간 및 GitHub Commit Count
+- 총 소요시간
+    - 취업 준비 등 개인일정으로 인해 하루 5H정도 고도화 작업에 집중하기로 함
+    - 5H * 22일 = 110H
+- GitHub Commit Count
+    - 1차 + 2차
+    - 문서 작성 기준 front 영역에서 243회, backend 영역에서 203회
+    - <strong>총 446회</strong>
+
+### 3.3. 프로젝트 관리
+#### Notion <a href="https://glimmer-velvet-2ce.notion.site/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5?pvs=4">(🔗‘조용하고강하조’ 팀 프로젝트)</a>
+- 1차
+<img src="/readme/develo_plan.png">
+- 2차
+<img src="/readme/develo_plan2.png">
+- 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
+- 다양한 템플릿을 사용할 수 있다는 장점이 있습니다.
+- 타임라인 뷰를 생성하고 라인을 각 기능 구현별로 세분화하여 구현 별 페이지를 오픈하여 관련 이슈 및 문제 해결, 참고 사이트 등을 정리했습니다.
+- 회의록을 작성하여 프로젝트 진행 과정 내용을 최대한 기록하려고 노력했습니다.
+
+#### GitHub Project & issue
+![GitHub Project & issue](image-2.png)
+- Notion과 겹치는 부분이 있으나 새로운 기능을 사용해보고자 선택하였습니다.
+- 팀원들과 프로젝트를 협력하여 개발할 수 있도록 편리한 환경을 제공합니다.
+- 프로젝트 소스 코드 관리가 용이합니다.
+- 이슈 보드를 통해 현재 진행 상황을 살필 수 있고, 발생한 이슈를 확인할 수 있으며 어떤 작업들이 완료되었는지 확인할 수 있습니다.
+
+
+<p align="right"><a href="#top">(Top)</a></p>
+<br>
+
+## <span id="dev">4. 개발환경 및 배포 URL</span>
 ### 개발환경
+![project-env](readme/project-env.png)
 - Front : HTML, CSS, Vanilla JS
 - Back : Python, Django Rest Framework
 - openAI api
+- Amazon EC2, PostgreSQL, nginx, docker
 
 ### 배포 URL
+- 배포 기간 : 2023.09.04 ~ 2023.10.12(38일)
 - URL : 🔗http://joongobooks.com
 
     :rocket: 테스트 ID : admin   /       :rocket: 테스트 Password : admin123!
@@ -48,7 +177,7 @@
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
 
-## <span id="tree">3. 프로젝트 구조</span>
+## <span id="tree">5. 프로젝트 구조 및 API 명세서</span>
 
 
 ### ERD
@@ -140,35 +269,11 @@ joongobooks
 <br>
 
 ## <span id="role">4. 역할 분담</span>
-<img src="/readme/TeamProject - Joongobooks.png">
 
-### 구현기능
-- 🔐<strong>계정</strong>
-    - 회원가입
-    - 로그인/로그아웃
-    - 프로필 생성/수정
-- :computer: <strong>중고도서 정보</strong>
-    - 중고도서 이미지 파일 업로드, 미리보기
-    - 등록 / 수정 / 삭제
-    - 중고도서 목록 보기
-- :robot: <strong>AI catbot (recommend)</strong>
-    - chatbot 질문하기 / 답변받기
-    - 하루 2번 사용가능
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
 
-## <span id="task">5. 개발 기간</span>
-### 개발기간(23.08.17 ~ 23.09.04)
 
-<img src="/readme/duration.png">
-
-<img src="/readme/develo_plan.png">
-
-- 🔗<a href="https://glimmer-velvet-2ce.notion.site/1-ba1d7268559a4fd6aebd2ac6d2e7a9d5"> Notion에서 Issue 관리</a>
-
-- 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
-<p align="right"><a href="#top">(Top)</a></p>
-<br>
 
 ## <span id="ui">6. UI</span>
 
