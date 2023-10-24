@@ -188,34 +188,43 @@
 
 ### URL
 
-|   앱 이름  |        기능        |                          URL                         | Method |
-|:----------:|:------------------:|:----------------------------------------------------:|:------:|
-| user       | 회원가입           | 도메인/api/user/register/                             | POST   |
-|            | 로그인             | 도메인/api/user/auth/                                 | POST   |
-|            | 로그아웃           | 도메인/api/user/auth/                                 | DELETE |
-|            | 비밀번호 변경      | 도메인/api/user/auth/<int:user_id>/changepassword/    | PUT    |
-|            | 회원탈퇴           | 도메인/api/user/auth/<int:user_id>/delete/            | DELETE |
-|            | 프로필 조회        | 도메인/api/user/auth/profile/<int:user_id>/           | GET    |
-|            | 프로필 생성        | 도메인/api/user/auth/profile/<int:user_id>/create     | POST   |
-|            | 프로필 수정        | 도메인/api/user/auth/profile/<int:user_id>/update     | PUT    |
-|            | JWT 토큰 갱신      | 도메인/api/user/auth/refresh/                         | GET    |
-|            | JWT 토큰 발급      | 도메인/api/user/api/token/                            | GET    |
-| book       | 판매글 리스트      | 도메인/book/list/                                     | GET    |
-|            | 판매글 검색        | 도메인/book/search/                                   | GET    |
-|            | 판매글 생성        | 도메인/book/create/                                   | POST   |
-|            | 판매글 상세보기    | 도메인/book/<int:book_id>/                            | GET    |
-|            | 판매글 삭제        | 도메인/book/<int:book_id>/delete/                     | DELETE |
-|            | 판매글 좋아요      | 도메인/book/<int:book_id>/like/                       | POST   |
-|            | 댓글 달기          | 도메인/book/<int:book_id>/comment/create/             | POST   |
-|            | 댓글 삭제          | 도메인/book/<int:book_id>/<int:comment_id>/delete/    | POST   |
-| jjim       | 판매글 찜          | 도메인/jjim/create/                                   | POST   |
-|            | 판매글 찜 취소     | 도메인/jjim/delete/<int:book_id>/<int:user_id>/        | DELETE |
-| recommend  | 책 추천 기록 조회  | 도메인/api/recommend/chatbot/                          | GET    |
-|            | 책 추천 받기       | 도메인/api/recommend/chatbot/                         | POST   |
+| 앱 이름 | 기능 | URL | Method |
+|:--:|:--:|:--:|:--:|
+| user | 회원가입 | 도메인/api/user/register/ | POST |
+|      | 로그인 | 도메인/api/user/auth/ | POST |
+|      | 로그아웃 | 도메인/api/user/auth/ | DELETE |
+|      | 비밀번호 변경 | 도메인/api/user/auth/`<int:user_id>`/changepassword/ | PUT |
+|      | 비밀번호 재설정 | 도메인/api/user/resetpassword/ | POST |
+|      | 회원탈퇴 | 도메인/api/user/auth/`<int:user_id>`/delete/ | DELETE |
+|      | 프로필 조회 | 도메인/api/user/profile/`<int:user_id>`/ | GET |
+|      | 프로필 수정 | 도메인/api/user/profile/`<int:user_id>`/update | PUT |
+|      | JWT 토큰 갱신 | 도메인/api/user/auth/refresh/ | GET |
+|      | JWT 토큰 발급 | 도메인/api/user/api/token/ | GET |
+| book | 판매글 리스트   | 도메인/book/list/                 | GET    |
+|      | 판매글 검색     | 도메인/book/search/?title__icontains=`검색어`&`판매상태`&page=`현재페이지` | GET    |
+|      | 판매글 생성     | 도메인/book/create/               | POST   |
+|      | 판매글 상세보기 | 도메인/book/`<int:book_id>`/        | GET    |
+|      | 판매글 삭제     | 도메인/book/`<int:book_id>`/delete/ | DELETE |
+|      | 판매글 좋아요   | 도메인/book/`<int:book_id>`/like/   | POST   |
+|      | 댓글 달기       | 도메인/book/`<int:book_id>`/comment/create/          | POST |
+|      | 댓글 삭제       | 도메인/book/`<int:book_id>`/`<int:comment_id>`/delete/ | POST |
+| bookreview | 서평 리스트 | 도메인/bookreview/list/ | GET    |
+|            | 서평 상세보기 | 도메인/bookreview/`<int:bookreview_id>`/ | GET |
+|            | 서평 생성 | 도메인/bookreview/create/ | POST   |
+|            | 서평 수정 | 도메인/bookreview/`<int:bookreview_id>`/update/ | PUT |
+|            | 서평 삭제 | 도메인/bookreview/`<int:bookreview_id>`/delete/ | DELETE |
+|            | 해시태그 리스트 | 도메인/bookreview/`<int:bookreview_id>`/hashtag/ | GET |
+|            | 해시태그 검색 | 도메인/bookreview/hashtag/search/ | GET |
+|            | 해시태그 생성 | 도메인/bookreview/`<int:bookreview_id>`/hashtag/create | POST |
+|            | 해시태그 삭제 | 도메인/bookreview/hashtag/`<int:hashtag_id>`/delete | DELETE |
+| jjim | 판매글 찜 | 도메인/jjim/create/ | POST   |
+|      | 판매글 찜 취소 | 도메인/jjim/delete/`<int:book_id>`/`<int:user_id>`/ | DELETE |
+| recommend  | 책 추천 기록 조회  | 도메인/api/recommend/chatbot/`<int:user_id>`/conversations/ | GET    |
+|            | 책 추천 요청 | 도메인/api/recommend/chatbot/ | POST   |
 
 <br>
 
-### 🔗<a href="https://glimmer-velvet-2ce.notion.site/JoongoBooks-API-9f8775a8fb604bdd9f1f1daa7f7a3a93?pvs=4">API 명세서 확인</a>
+### 🔗<a href="https://glimmer-velvet-2ce.notion.site/JoongoBooks-API-2-62006fafadcd4a168b6a652fe2ef83a0?pvs=4">API 명세서 확인</a>
 
 
 <br>
@@ -229,6 +238,23 @@ joongobooks
 │   ├── admin.py
 │   ├── apps.py
 │   ├── pagination.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── bookreview
+│   ├── migrations
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── jjim
+│   ├── admin.py
+│   ├── apps.py
 │   ├── models.py
 │   ├── serializers.py
 │   ├── tests.py
