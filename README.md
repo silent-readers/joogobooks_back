@@ -140,12 +140,14 @@
 - 2차
 <img src="/readme/develo_plan2.png">
 - 🔗<a href="https://www.notion.so/7337f3775c0d43e5a75959562622ebbf"> 회의록</a>
+
 - 다양한 템플릿을 사용할 수 있다는 장점이 있습니다.
 - 타임라인 뷰를 생성하고 라인을 각 기능 구현별로 세분화하여 구현 별 페이지를 오픈하여 관련 이슈 및 문제 해결, 참고 사이트 등을 정리했습니다.
 - 회의록을 작성하여 프로젝트 진행 과정 내용을 최대한 기록하려고 노력했습니다.
 
 #### GitHub Project & issue
 ![GitHub Project & issue](image-2.png)
+
 - Notion과 겹치는 부분이 있으나 새로운 기능을 사용해보고자 선택하였습니다.
 - 팀원들과 프로젝트를 협력하여 개발할 수 있도록 편리한 환경을 제공합니다.
 - 프로젝트 소스 코드 관리가 용이합니다.
@@ -265,23 +267,11 @@ joongobooks
 ```
 <p align="right"><a href="#top">(Top)</a></p>
 
-
 <br>
-
-## <span id="role">4. 역할 분담</span>
-
-<p align="right"><a href="#top">(Top)</a></p>
-<br>
-
-
 
 ## <span id="ui">6. UI</span>
 
-<img src="/readme/ui1.png" alt="ui1.png">
-
-<img src="/readme/ui2.png" alt="ui2.png">
-
-<img src="/readme/ui3.png" alt="ui3.png">
+<img src="/readme/ui4.png" alt="ui1.png">
 
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
