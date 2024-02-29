@@ -168,7 +168,7 @@
 
 ### 시스템 아키텍처
 
-![system architecture.png](readme/architecture.png)
+<p align="center"><img src="/readme/architecture.png"></img></p>
 - 서버를 배포하는 과정에서 AWS 아키텍처를 사용했습니다. Amazon EC2에는 Docker가 구축되어 있으며, Docker 안에는 Nginx와 PostgreSQL이 있습니다. Nginx는 웹 서버로 사용되고, PostgreSQL은 데이터베이스 역할을 합니다. 프론트엔드 관련 파일은 Amazon S3에 저장되어 있습니다. 이 구조를 통해 서버와 스토리지 간의 효율적인 데이터 전송과 관리가 가능합니다.
 
 
