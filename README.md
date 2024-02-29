@@ -12,11 +12,10 @@
 3. [개발 기간 및 프로젝트 관리](#task)
 4. [개발 환경 및 배포 URL](#dev)
 5. [프로젝트 구조 및 API 명세서](#tree)
-6. [역할 분담](#role)
-7. [UI](#ui)
-8. [페이지 기능](#pages)
-9. [개발하며 겪은 이슈](#issues)
-10. [마무리](#realization)
+6. [UI](#ui)
+7. [페이지 기능](#ui)
+8. [개발하며 겪은 이슈](#issues)
+9. [마무리](#realization)
 
 
 <hr>
@@ -165,6 +164,14 @@
 - openAI api
 - Amazon EC2, PostgreSQL, nginx, docker
 
+<br>
+
+### 시스템 아키텍처
+
+![system architecture.png](readme/architecture.png)
+- 서버를 배포하는 과정에서 AWS 아키텍처를 사용했습니다. Amazon EC2에는 Docker가 구축되어 있으며, Docker 안에는 Nginx와 PostgreSQL이 있습니다. Nginx는 웹 서버로 사용되고, PostgreSQL은 데이터베이스 역할을 합니다. 프론트엔드 관련 파일은 Amazon S3에 저장되어 있습니다. 이 구조를 통해 서버와 스토리지 간의 효율적인 데이터 전송과 관리가 가능합니다.
+
+
 ### 배포 URL
 - 배포 기간 : 2023.09.04 ~ 2023.10.12(38일)
 - URL : 🔗http://joongobooks.com
@@ -174,6 +181,8 @@
 
 ### 관련 Repository 주소
 - FrontEnd : https://github.com/silent-readers/joogobooks_front
+
+
 
 
 <p align="right"><a href="#top">(Top)</a></p>
@@ -224,7 +233,7 @@
 
 <br>
 
-### 🔗<a href="https://glimmer-velvet-2ce.notion.site/JoongoBooks-API-2-62006fafadcd4a168b6a652fe2ef83a0?pvs=4">API 명세서 확인</a>
+### 🔗<a href="https://www.notion.so/simseulnyang/JoongoBooks-API-2-62006fafadcd4a168b6a652fe2ef83a0?pvs=4">API 명세서 확인</a>
 
 
 <br>
@@ -304,30 +313,33 @@ joongobooks
 
 ## <span id="pages">7. 페이지 기능</span>
 
-| 1. 회원가입 화면 | 2. 로그인 및 로그아웃|
+| 1. 회원가입 및 로그인 화면 | 2. 프로필 조회 및 수정 |
 |:---------:|:---------:|
-|![register.gif](readme/register.gif)|![loginandout.gif](readme/loginandout.gif)|
+|![signup.gif](readme/signup.gif)|![profile.gif](readme/profile.gif)|
 
-| 3. 프로필 조회 및 생성 | 4. 비밀번호 변경 |
+| 3. 비밀번호 변경 | 4. 도서 목록 조회 및 생성 |
 |:---------:|:---------:|
-|![createprofile.gif](readme/createprofile.gif)|![updatepassword.gif](readme/updatepassword.gif)|
+|![changepassword.gif](readme/changepassword.gif)|![createbookinfo.gif](readme/createbookinfo.gif)|
 
-
-| 5. 도서 목록 조회| 6. 도서정보생성 |
+| 5. 도서 정보 수정 | 6. 도서 정보 삭제 |
 |:---------:|:---------:|
-|![booklist.gif](readme/booklist.gif)|![createbook.gif](readme/createbook.gif)|
+|![updatebookinfo.gif](readme/updatebookinfo.gif)|![deletebookinfo.gif](readme/deletebookinfo.gif)|
 
-| 7. 도서정보 수정 | 8. 도서정보삭제 |
+| 7. 도서정보 검색 | 8. 도서추천 AI Bot |
 |:---------:|:---------:|
-|![updatebook.gif](readme/updatebook.gif)|![deletebook.gif](readme/deletebook.gif)|
+|![searchbookinfo.gif](readme/searchbookinfo.gif)|![recommend.gif](readme/recommend.gif)|
 
-| 9. 도서정보 검색 | 10. 도서추천 AI Bot |
+| 9. 도서 서평 목록 조회 | 10. 도서 서평 정보 등록 |
 |:---------:|:---------:|
-|![searchbook.gif](readme/searchbook.gif)|![recommend.gif](readme/recommend.gif)|
+|![reviewlist.gif](readme/reviewlist.gif)|![createreview.gif](readme/createreview.gif)|
 
-| 11. About us |
+| 11. 도서 서평 정보 수정 | 12. 도서 서평 정보 삭제 |
+|:---------:|:---------:|
+|![updatereview.gif](readme/updatereview.gif)|![deletereview.gif](readme/deletereview.gif)|
+
+| 13. About us |
 |:---------:|
-|![aboutus.gif](readme/aboutus.gif)|
+|![about.gif](readme/about.gif)|
 
 <p align="right"><a href="#top">(Top)</a></p>
 <br>
@@ -359,46 +371,16 @@ joongobooks
 3. server를 통해 저장된 media file을 가져올 때 화면에 구현되지 않는 error
     - 내용
         - fetch api request를 통해 중고 도서가 등록된 후 도서목록에서 등록된 도서들을 확인할 수 있었다. 하지만 다른 정보들은 잘 넘어오는 반면 img 파일은 넘어오지 못하는 현상을 발견했다.
-        <img src="/readme/mediaerror.png">
         - 서버에서 GET method를 통해 가져올 때 media와 관련된 url이 필요하다고 생각하고 ‘http://localhost:8000’ 을 추가해줬다. 하지만 url 구문을 완성해서 특정 media img file에 대한 GET 요청을 진행해도 [alt=”작성된 문자”] 만 보였다.
     - 결과
-        - HTTP_404_error에 집중해보기로 했다.
-        ```
-                
-        💡 **원인**
-
-        웹 서버는 요청된 페이지를 검색할 수 없을 때 **HTTP 404 - 파일을 찾을 수 없음** 오류 메시지를 반환합니다.
-
-        다음은 이 오류 메시지의 몇 가지 일반적인 원인입니다.
-
-        - 요청한 파일의 이름이 변경되었습니다.
-        - 요청한 파일이 다른 위치로 이동 및/또는 삭제되었습니다.
-        - 요청한 파일은 유지 관리, 업그레이드 또는 기타 알 수 없는 원인으로 인해 일시적으로 사용할 수 없습니다.
-        - 요청한 파일이 없습니다.
-        - IIS 6.0: 적절한 웹 서비스 확장 또는 MIME 유형이 사용되지 않습니다.
-        - 가상 디렉터리가 다른 서버의 드라이브 루트에 매핑됩니다.
-
-        **해결 방법**
-
-        이 문제를 해결하려면 브라우저의 URL에서 요청한 파일이 IIS 컴퓨터에 있고 올바른 위치에 있는지 확인합니다.
-
-        IIS MMC(Microsoft Management Console) 스냅인을 사용하여 IIS 컴퓨터의 파일 시스템에서 요청된 파일이 있어야 하는 위치를 확인합니다.
-
-        이것은 웹 사이트에서 VDIR(가상 디렉터리)을 사용하는 경우 중요합니다. VDIR은 웹 사이트의 홈 디렉토리에 포함되어 있지 않지만 클라이언트 브라우저에 있는 것처럼 보이는 디렉토리입니다. 이 가상 디렉터리는 드라이브의 하위 폴더에 매핑되거나 이름으로 파일을 참조해야 합니다.
-
-        예를 들어, 404 오류를 일으킨 URL이 `http://Microsoft.Com/Test/File1.htm`이고 IIS 스냅인이 Microsoft.Com 웹 사이트인 경우, /Test/ 디렉터리는 실제로 IIS 컴퓨터의 c:\Information 위치에 매핑되는 가상 디렉터리입니다. 즉, File1.htm 파일이 c:\Information 디렉터리에 있는지 그리고 파일 이름의 철자가 올바른지 확인해야 합니다.
-
-        IIS 동적 콘텐츠: W3C 확장 로그 파일의 404.2 항목은 웹 확장이 활성화되어 있지 않을 때 기록됩니다. IIS MMC(Microsoft Management Console) 스냅인을 사용하여 적절한 웹 확장을 사용하도록 설정합니다. 기본 웹 확장에는 ASP, ASP.NET, Server-Side Include, WebDAV 게시, FrontPage Server Extensions, CGI(Common Gateway Interface)가 포함됩니다. 사용자 지정 확장을 추가하고 명시적으로 활성화해야 합니다. 자세한 내용은 IIS 도움말 파일을 참조하세요.
-
-        IIS 정적 콘텐츠: 확장이 MIME 맵 속성의 알려진 확장에 매핑되지 않은 경우 W3C 확장 로그 파일의 404.3 항목이 기록됩니다. IIS MMC(Microsoft Management Console) 스냅인을 사용하여 MIME 맵에서 적절한 확장을 구성합니다. 자세한 내용은 IIS 도움말 파일을 참조하세요.
-
-        이 오류 메시지의 덜 일반적인 다른 원인에 대한 자세한 내용은 [IIS 숨겨진 정적 파일이 HTTP 404를 반환하거나 액세스 거부 오류](https://learn.microsoft.com/ko-kr/troubleshoot/iis/hidden-static-files-http-404-access-denied)를 참조하세요.
-        ```
         - url 주소는 정확하지만 왜 server가 이 요청에 대해 정확히 인식하지 못하는지 BackEnd 부분에 집중해보기로 했다.
         - 열심히 코드들을 훑어보던 중 프로젝트/urls.py에 media 폴더에 담긴 파일들을 이용하기 위해 작성해야 할 코드를 빼먹었단 사실을 깨달았다.
-        ```
+        - media img 파일과 관련된 .js 파일에도 media 파일의 url을 정확하게 지정해주고 다시 실행해보니 책 목록, 상세페이지 등 media 파일을 이용하는 부분에서 정확하게 파일이 화면에 잘 구현되어 보여지는 것을 확인했다.
+
+    ```
         # 추가적으로 작성해줬어야 하는 코드
         + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
 
         # 수정한 코드
         from django.contrib import admin
@@ -415,8 +397,10 @@ joongobooks
             path('jjim/', include('jjim.urls')),
             path('api/chat/', include('chat.urls')),
         ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-        ```
-        - media img 파일과 관련된 .js 파일에도 media 파일의 url을 정확하게 지정해주고 다시 실행해보니 책 목록, 상세페이지 등 media 파일을 이용하는 부분에서 정확하게 파일이 화면에 잘 구현되어 보여지는 것을 확인했다.
+    ```
+
+<br>
+<hr>
 
 - 승겸님
 1. 프로필 생성 기능 구현과정에서 Profile 데이터베이스에 저장되지 않는 문제 발생
@@ -444,10 +428,15 @@ joongobooks
             jjim = Jjim.objects.filter(user_id=user_id, book_id=book_id).first()
         ```
 
+<br>
+<hr>
+
+
 - 유림님
     - bookSearchView를 만들면서 카테고리 설정과 키워드 검색을 동시에 적용한 결과를 만들고 싶었는데, Search와 DjangoFilterBackend를 하나의 검색버튼으로 동시에 적용시킬 수 없었습니다. 그리고 검색을 filter를 사용해서 하자니 이름이 일치하는 것들만 결과물로 나와서, BookSearchFilter를 새로 만들어 적용시켰습니다. FilterSet을 상속받되, 책 제목을 검색할 때 키워드를 포함하는 모든 결과물들을 가지고 올 수 있도록 title은 icontains, sale_condition은 exact 필드를 사용하였습니다.
  
 <br>
+<hr>
 
 - 병훈님
 1. 글 수정 및 삭제 시 작성자가 아니어도 수정 및 삭제가 되는 현상 발생
@@ -496,6 +485,7 @@ joongobooks
     - 결과
        - S3 버킷명을 도메인과 똑같이 "joongobooks.com"으로 설정하여 해결
 <br>
+<hr>
 
 - 예원님
   - 이슈 : SystemCheckError: System check identified some issues 에러 발생
@@ -516,9 +506,3 @@ joongobooks
    - 처음으로 해본 협업이라 많이 미숙한 점도 많았고, 시간도 부족해서 더 많은 것들을 구현하지는 못했다는 아쉬움이 남지만, 이번 프로젝트를 하면서 Django, html, css에 집중할 수 있어서 좋았습니다. 어떻게 구현해야할지 방향성을 고민하고, 방법을 찾아보고 하는 과정이 저의 자양분이 되었으리라 생각합니다. 시간이 부족해서 구현하지 못한 내용들은 앞으로 시간을 갖고 차차 채워나갈 것입니다. 앞으로도 다른 팀 프로젝트에 도전하면서 제 실력을 향상시키고자 하는 의지가 생겼습니다. 이번 프로젝트는 제게 다른 분들과 해본 만큼 저의 실력이 아직 나아갈 곳이 많고, 부족한 면이 많다는 것과 개발의 매력을 알려주어 앞으로도 열심히 하는데 동기부여가 될 것 같습니다. 그리고 저를 도와주시고, 함께 해주시느라 고생한 팀원분들께 정말 감사하다는 인사 남기고 싶습니다.
 
 <p align="right"><a href="#top">(Top)</a></p>
-<br>
-
-## <span id="advancement">10. 고도화 일정 </span>
-
-<p align="right"><a href="#top">(Top)</a></p>
-<br>
